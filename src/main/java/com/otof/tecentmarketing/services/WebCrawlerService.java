@@ -18,9 +18,6 @@ public class WebCrawlerService extends WebCrawler {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(WebCrawlerService.class);
 
-
-    private CommunityInfoEntity communityInfoEntity;
-    private ComboPooledDataSource comboPooledDataSource;
     private static Pattern FILE_ENDING_EXCLUSION_PATTERN = Pattern.compile(".*(\\.(" +
             "css|js" +
             "|bmp|gif|jpe?g|JPE?G|png|tiff?|ico|nef|raw" +
@@ -48,7 +45,6 @@ public class WebCrawlerService extends WebCrawler {
     public void visit(Page page) {
         if (page.getParseData() instanceof HtmlParseData) {
             HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-            String text = htmlParseData.getText();
             String html = htmlParseData.getHtml();
             Set<WebURL> links = htmlParseData.getOutgoingUrls();
 
@@ -56,7 +52,7 @@ public class WebCrawlerService extends WebCrawler {
             Elements communities = document.select("a.plotTit");
             communities.stream().filter( v -> v.attr("href").contains("fang.com"))
                     .forEach( v -> CommunityCrawlerService.communitiesUrl.add("https:" + v.attr("href")));
-
         }
+        logger.info("finish");
     }
 }

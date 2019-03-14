@@ -1,13 +1,10 @@
 package com.otof.tecentmarketing.services;
 
-import com.otof.tecentmarketing.factories.CrawlerFactory;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 public class CrawlerInitService {
 
@@ -16,13 +13,12 @@ public class CrawlerInitService {
     private static final int NUMBEROFCRAWLER = 5;
     private static final int MAXSEARCHDEPTH = 0;
 
-    public void startCrawl() throws Exception {
+    public void startCrawl(CrawlController.WebCrawlerFactory webCrawlerFactory) throws Exception {
         CrawlConfig crawlConfig = initCrawlConfig();
         CrawlController crawlController = initCrawlController(crawlConfig);
-        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_1_0_0_0/");
-        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_2_0_0_0/");
-        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_3_0_0_0/");
-        crawlController.start(new CrawlerFactory(), NUMBEROFCRAWLER);
+
+        crawlController = "CrawlerFactory".equals(webCrawlerFactory.getClass().getSimpleName()) ? buildHomepageSeeds(crawlController) : buildCommunitySeeds(crawlController);
+        crawlController.start(webCrawlerFactory, NUMBEROFCRAWLER);
     }
 
     private CrawlConfig initCrawlConfig() {
@@ -39,5 +35,19 @@ public class CrawlerInitService {
         RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
         CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
         return controller;
+    }
+
+    private CrawlController buildHomepageSeeds(CrawlController crawlController) {
+        crawlController.addSeed("https://wuhan.esf.fang.com/housing");
+        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_1_0_0_0");
+        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_2_0_0_0");
+        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_3_0_0_0");
+        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_4_0_0_0");
+        return crawlController;
+    }
+
+    private CrawlController buildCommunitySeeds(CrawlController crawlController) {
+        CommunityCrawlerService.communitiesUrl.forEach( v -> crawlController.addSeed(v));
+        return crawlController;
     }
 }
