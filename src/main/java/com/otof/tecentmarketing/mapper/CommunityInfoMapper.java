@@ -3,8 +3,11 @@ package com.otof.tecentmarketing.mapper;
 import com.otof.tecentmarketing.entity.CommunityInfoEntity;
 import org.apache.ibatis.annotations.*;
 
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.Map;
 
+@Mapper
 public interface CommunityInfoMapper {
 
     @Select("select * from CommunityInfo")
@@ -20,4 +23,26 @@ public interface CommunityInfoMapper {
 
     @Insert("insert into CommunityInfo(community_name, build_year, building_amount, apartment_amount, price) values (#{communityName}, #{buildYear}, #{buildingAmount}, #{apartmentAmount}, #{price})")
     void insertCommunityInfo(CommunityInfoEntity entity);
+
+    @InsertProvider(type = Provider.class, method = "batchInsert")
+    int batchInsertCommunityInfo(List<CommunityInfoEntity> communities);
+
+    class Provider {
+        /* 批量插入 */
+        public String batchInsert(Map map ) {
+            List<CommunityInfoEntity> communities = (List<CommunityInfoEntity>)map.get("list");
+            StringBuilder sb = new StringBuilder();
+            sb.append("INSERT INTO CommunityInfo (community_name, build_year, building_amount, apartment_amount, price) VALUES ");
+            MessageFormat mf = new MessageFormat(
+                    "(#'{'list[{0}].communityName}, #'{'list[{0}].buildYear}, #'{'list[{0}].buildingAmount}, #'{'list[{0}].apartmentAmount}, #'{'list[{0}].price})"
+            );
+
+            for (int i = 0; i < communities.size(); i++) {
+                sb.append(mf.format(new Object[] {i}));
+                if (i < communities.size() - 1)
+                    sb.append(",");
+            }
+            return sb.toString();
+        }
+    }
 }

@@ -43,6 +43,7 @@ public class CrawlerInitService {
         crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_2_0_0_0");
         crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_3_0_0_0");
         crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_4_0_0_0");
+        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_5_0_0_0");
         return crawlController;
     }
 

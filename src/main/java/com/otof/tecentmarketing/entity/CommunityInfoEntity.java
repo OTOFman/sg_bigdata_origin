@@ -5,10 +5,18 @@ public class CommunityInfoEntity {
     private String communityName;
     private String buildYear;
     private String buildingAmount;
-    private int apartmentAmount;
-    private int price;
+    private String apartmentAmount;
+    private String price;
 
     public CommunityInfoEntity() {
+    }
+
+    public CommunityInfoEntity(String communityName, String buildYear, String buildingAmount, String apartmentAmount, String price) {
+        this.communityName = communityName;
+        this.buildYear = buildYear;
+        this.buildingAmount = buildingAmount;
+        this.apartmentAmount = apartmentAmount;
+        this.price = price;
     }
 
     public String getCommunityName() {
@@ -35,19 +43,19 @@ public class CommunityInfoEntity {
         this.buildingAmount = buildingAmount;
     }
 
-    public int getApartmentAmount() {
+    public String getApartmentAmount() {
         return apartmentAmount;
     }
 
-    public void setApartmentAmount(int apartmentAmount) {
+    public void setApartmentAmount(String apartmentAmount) {
         this.apartmentAmount = apartmentAmount;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }
