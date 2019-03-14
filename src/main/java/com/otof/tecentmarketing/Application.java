@@ -4,6 +4,7 @@ import com.otof.tecentmarketing.factories.CrawlCommunityFactory;
 import com.otof.tecentmarketing.factories.CrawlerFactory;
 import com.otof.tecentmarketing.mapper.CommunityInfoMapper;
 import com.otof.tecentmarketing.services.CrawlerInitService;
+import com.otof.tecentmarketing.services.JsoupCrawlerService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +18,19 @@ import javax.annotation.PostConstruct;
 public class Application {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(Application.class);
-    @Autowired
-    private CommunityInfoMapper communityInfoMapper;
+
     @Autowired
     private CrawlCommunityFactory crawlCommunityFactory;
+    @Autowired
+    private JsoupCrawlerService jsoupCrawlerService;
 
     @PostConstruct
     public void startClawer() throws Exception {
 
         new CrawlerInitService().startCrawl(new CrawlerFactory());
         logger.info("Finish crawl information from home page!");
-        new CrawlerInitService().startCrawl(crawlCommunityFactory);
+        //new CrawlerInitService().startCrawl(crawlCommunityFactory);
+        jsoupCrawlerService.getCommunityInfo();
     }
 
     public static void main(String[] args) {

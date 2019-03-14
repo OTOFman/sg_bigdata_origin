@@ -1,5 +1,6 @@
 package com.otof.tecentmarketing.services;
 
+import com.google.common.base.Utf8;
 import com.otof.tecentmarketing.entity.CommunityInfoEntity;
 import com.otof.tecentmarketing.mapper.CommunityInfoMapper;
 import edu.uci.ics.crawler4j.crawler.Page;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class CommunityCrawlerService extends WebCrawler {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(WebCrawlerService.class);
     public static List<String> communitiesUrl = new ArrayList<>();
+    private static int parsedCommunityNumber = 0;
     @Autowired
     private CommunityInfoMapper communityInfoMapper;
     private List<CommunityInfoEntity> communities;
@@ -48,7 +51,7 @@ public class CommunityCrawlerService extends WebCrawler {
             try {
                 String price = new String(document.select("span.prib").text().getBytes("UTF-8"), "GB2312");
                 Elements basicInfoElements = document.selectFirst("div.Rinfolist ul").children();
-                String buildYear =new String(basicInfoElements.get(0).text().getBytes("UTF-8"), "GB2312") ;
+                String buildYear =new String(basicInfoElements.get(0).text().getBytes("GB2312"), "UTF-8") ;
                 String apartmentAmount = basicInfoElements.get(4).text();
                 String buildingAmount = basicInfoElements.get(6).text();
                 String communityName = "保利时代";
@@ -63,16 +66,24 @@ public class CommunityCrawlerService extends WebCrawler {
                 logger.info("the buildingAmount is " + buildingAmount );
 
                 communities.add(new CommunityInfoEntity(communityName, buildYear, buildingAmount, apartmentAmount, price));
-
+                if (++parsedCommunityNumber == 100) {
+                    storeDataToDB();
+                    communities.clear();
+                    parsedCommunityNumber = 0;
+                }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
+            } catch (IndexOutOfBoundsException e) {
+                logger.warn("The structure of community is uncommon!");
             }
 
         }
     }
 
-    @Override
-    public void onBeforeExit() {
-        communityInfoMapper.batchInsertCommunityInfo(communities);
+    private void storeDataToDB() {
+        if (!communities.isEmpty()) {
+            communityInfoMapper.batchInsertCommunityInfo(communities);
+        }
+        return;
     }
 }

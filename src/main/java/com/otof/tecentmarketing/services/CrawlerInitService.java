@@ -8,23 +8,37 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 public class CrawlerInitService {
 
-    private static final String CRAWLSTORAGEFOLDER = "src/main/resources/";
+    private static final String CRAWLSTORAGEFIRSTFOLDER = "src/main/resources/crawler_first";
+    private static final String CRAWLSTORAGESECONDFOLDER = "src/main/resources/crawler_second";
     private static final int POLITENESSDELAY = 100;
     private static final int NUMBEROFCRAWLER = 5;
     private static final int MAXSEARCHDEPTH = 0;
 
     public void startCrawl(CrawlController.WebCrawlerFactory webCrawlerFactory) throws Exception {
         CrawlConfig crawlConfig = initCrawlConfig();
-        CrawlController crawlController = initCrawlController(crawlConfig);
 
-        crawlController = "CrawlerFactory".equals(webCrawlerFactory.getClass().getSimpleName()) ? buildHomepageSeeds(crawlController) : buildCommunitySeeds(crawlController);
+        CrawlController crawlController = "CrawlerFactory".equals(webCrawlerFactory.getClass().getSimpleName()) ?
+                buildHomepageController(crawlConfig) : buildCommunityController(crawlConfig);
+
         crawlController.start(webCrawlerFactory, NUMBEROFCRAWLER);
+    }
+
+    private CrawlController buildHomepageController(CrawlConfig crawlConfig) throws Exception {
+        crawlConfig.setCrawlStorageFolder(CRAWLSTORAGEFIRSTFOLDER);
+        CrawlController crawlController = initCrawlController(crawlConfig);
+        return buildHomepageSeeds(crawlController);
+
+    }
+
+    private CrawlController buildCommunityController(CrawlConfig crawlConfig) throws Exception {
+        crawlConfig.setCrawlStorageFolder(CRAWLSTORAGESECONDFOLDER);
+        CrawlController crawlController = initCrawlController(crawlConfig);
+        return buildCommunitySeeds(crawlController);
     }
 
     private CrawlConfig initCrawlConfig() {
         CrawlConfig config = new CrawlConfig();
         config.setPolitenessDelay(POLITENESSDELAY);
-        config.setCrawlStorageFolder(CRAWLSTORAGEFOLDER);
         config.setMaxDepthOfCrawling(MAXSEARCHDEPTH);
         return config;
     }
@@ -38,12 +52,10 @@ public class CrawlerInitService {
     }
 
     private CrawlController buildHomepageSeeds(CrawlController crawlController) {
-        crawlController.addSeed("https://wuhan.esf.fang.com/housing");
-        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_1_0_0_0");
-        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_2_0_0_0");
-        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_3_0_0_0");
-        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_4_0_0_0");
-        crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_5_0_0_0");
+        for (int i = 1; i<=100; i++) {
+            crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_" + Integer.toString(i) + "_0_0_0");
+        }
+       // crawlController.addSeed("https://wuhan.esf.fang.com/housing");
         return crawlController;
     }
 
