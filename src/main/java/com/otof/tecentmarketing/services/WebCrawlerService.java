@@ -2,8 +2,6 @@ package com.otof.tecentmarketing.services;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.otof.tecentmarketing.entity.CommunityInfoEntity;
-import com.otof.tecentmarketing.factories.CrawlCommunityFactory;
-import com.otof.tecentmarketing.mapper.CommunityInfoMapper;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
@@ -12,23 +10,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.regex.Pattern;
 
-@Service
 public class WebCrawlerService extends WebCrawler {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(WebCrawlerService.class);
 
-    @Autowired
-    private CommunityInfoMapper communityInfoMapper;
-    @Autowired
-    private CrawlerInitService crawlerInitService;
-    @Autowired
-    private CrawlCommunityFactory crawlCommunityFactory;
 
     private CommunityInfoEntity communityInfoEntity;
     private ComboPooledDataSource comboPooledDataSource;
@@ -49,12 +38,10 @@ public class WebCrawlerService extends WebCrawler {
 
     @Override
     public boolean shouldVisit(Page referringPage, WebURL url) {
-//        String href = url.getURL().toLowerCase();
-        String href = referringPage.getWebURL().getURL();
+        String href = referringPage.getWebURL().getURL().toLowerCase();
         logger.info("url is " + href + " and " + (!FILE_ENDING_EXCLUSION_PATTERN.matcher(href).matches() || href.endsWith(".fang.com")));
 
         return !FILE_ENDING_EXCLUSION_PATTERN.matcher(href).matches() || href.endsWith(".fang.com");
-//        return FILE_ENDING_INCLUDE_PATTERN.matcher(href).matches() || href.startsWith("http://wuhan.esf.fang.com/housing/");
     }
 
     @Override
