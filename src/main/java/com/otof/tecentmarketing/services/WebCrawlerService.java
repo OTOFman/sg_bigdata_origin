@@ -1,7 +1,5 @@
 package com.otof.tecentmarketing.services;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.otof.tecentmarketing.entity.CommunityInfoEntity;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
@@ -28,7 +26,6 @@ public class WebCrawlerService extends WebCrawler {
             "|zip|rar|gz|bz2|7z|bin" +
             "|xml|txt|java|c|cpp|exe" +
             "))$");
-    private static Pattern FILE_ENDING_INCLUDE_PATTERN = Pattern.compile("_(_0){4}_\\d+(_0){3}/?");
 
     public WebCrawlerService() {
     }
@@ -51,8 +48,7 @@ public class WebCrawlerService extends WebCrawler {
             Document document = Jsoup.parse(html);
             Elements communities = document.select("a.plotTit");
             communities.stream().filter( v -> v.attr("href").contains("fang.com"))
-                    .forEach( v -> CommunityCrawlerService.communitiesUrl.add("https:" + v.attr("href")));
+                    .forEach( v -> JsoupCrawlerService.communitiesUrl.add("https:" + v.attr("href")));
         }
-        logger.info("finish");
     }
 }

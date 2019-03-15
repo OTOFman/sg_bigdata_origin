@@ -13,12 +13,13 @@ public class CrawlerInitService {
     private static final int POLITENESSDELAY = 100;
     private static final int NUMBEROFCRAWLER = 5;
     private static final int MAXSEARCHDEPTH = 0;
+    private static final String SEEDPREFIX = "https://wuhan.esf.fang.com/housing/__0_0_0_0_";
+    private static final String SEEDSUFFIX = "_0_0_0";
 
     public void startCrawl(CrawlController.WebCrawlerFactory webCrawlerFactory) throws Exception {
         CrawlConfig crawlConfig = initCrawlConfig();
 
-        CrawlController crawlController = "CrawlerFactory".equals(webCrawlerFactory.getClass().getSimpleName()) ?
-                buildHomepageController(crawlConfig) : buildCommunityController(crawlConfig);
+        CrawlController crawlController = buildHomepageController(crawlConfig);
 
         crawlController.start(webCrawlerFactory, NUMBEROFCRAWLER);
     }
@@ -28,12 +29,6 @@ public class CrawlerInitService {
         CrawlController crawlController = initCrawlController(crawlConfig);
         return buildHomepageSeeds(crawlController);
 
-    }
-
-    private CrawlController buildCommunityController(CrawlConfig crawlConfig) throws Exception {
-        crawlConfig.setCrawlStorageFolder(CRAWLSTORAGESECONDFOLDER);
-        CrawlController crawlController = initCrawlController(crawlConfig);
-        return buildCommunitySeeds(crawlController);
     }
 
     private CrawlConfig initCrawlConfig() {
@@ -53,14 +48,9 @@ public class CrawlerInitService {
 
     private CrawlController buildHomepageSeeds(CrawlController crawlController) {
         for (int i = 1; i<=100; i++) {
-            crawlController.addSeed("https://wuhan.esf.fang.com/housing/__0_0_0_0_" + Integer.toString(i) + "_0_0_0");
+            crawlController.addSeed(SEEDPREFIX + Integer.toString(i) + SEEDSUFFIX);
         }
-       // crawlController.addSeed("https://wuhan.esf.fang.com/housing");
         return crawlController;
     }
 
-    private CrawlController buildCommunitySeeds(CrawlController crawlController) {
-        CommunityCrawlerService.communitiesUrl.forEach( v -> crawlController.addSeed(v));
-        return crawlController;
-    }
 }
