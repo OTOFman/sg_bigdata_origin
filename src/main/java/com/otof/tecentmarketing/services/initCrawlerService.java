@@ -6,7 +6,7 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
-public class CrawlerInitService {
+public class initCrawlerService {
 
     private static final String CRAWLSTORAGEFIRSTFOLDER = "src/main/resources/crawler_first";
     private static final String CRAWLSTORAGESECONDFOLDER = "src/main/resources/crawler_second";
