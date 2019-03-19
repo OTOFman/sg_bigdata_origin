@@ -58,11 +58,12 @@ public class HandleMapService {
         );
     }
 
-    public ResponseEntity<PoiResponseEntity> getCommunitiesByLocation(String location, String radius, String types) throws URISyntaxException {
+    public ResponseEntity<PoiResponseEntity> getCommunitiesByLocation(String location, String radius, String types, int page) throws URISyntaxException {
         URI uri = new URIBuilder(poiUrl)
                 .addParameter("location", location)
                 .addParameter("radius", radius)
                 .addParameter("types", types)
+                .addParameter("page", Integer.toString(page))
                 .addParameter("key", key)
                 .build();
         return restTemplate.exchange(

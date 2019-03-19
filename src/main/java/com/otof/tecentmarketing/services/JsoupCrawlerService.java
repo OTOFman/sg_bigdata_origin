@@ -53,7 +53,7 @@ public class JsoupCrawlerService {
                 }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-            } catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
                 logger.warn("The structure of community is uncommon!");
             } catch (IOException e) {
                 e.printStackTrace();
