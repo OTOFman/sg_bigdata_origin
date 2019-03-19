@@ -116,7 +116,7 @@ public class PoiResponseEntity {
         private String name;
         private String type;
         private String typecode;
-        private String address;
+        private Object address;
         private String location;
         private Object tel;
         private String distance;
@@ -171,11 +171,11 @@ public class PoiResponseEntity {
             this.typecode = typecode;
         }
 
-        public String getAddress() {
+        public Object getAddress() {
             return address;
         }
 
-        public void setAddress(String address) {
+        public void setAddress(Object address) {
             this.address = address;
         }
 

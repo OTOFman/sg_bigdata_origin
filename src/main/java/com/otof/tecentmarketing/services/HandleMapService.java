@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -49,13 +50,12 @@ public class HandleMapService {
                 .addParameter("key", key)
                 .build();
 
-        ResponseEntity<GeoCodeResponseEntity> responseEntity = restTemplate.exchange(
+        return restTemplate.exchange(
                 uri,
                 HttpMethod.GET,
                 requestEntity,
                 GeoCodeResponseEntity.class
         );
-        return responseEntity;
     }
 
     public ResponseEntity<PoiResponseEntity> getCommunitiesByLocation(String location, String radius, String types) throws URISyntaxException {
@@ -65,13 +65,30 @@ public class HandleMapService {
                 .addParameter("types", types)
                 .addParameter("key", key)
                 .build();
-        ResponseEntity<PoiResponseEntity> responseEntity = restTemplate.exchange(
+        return restTemplate.exchange(
                 uri,
                 HttpMethod.GET,
                 new HttpEntity<>(httpHeaders) ,
                 PoiResponseEntity.class
         );
-        return responseEntity;
+    }
+
+    public ResponseEntity<PoiResponseEntity> getSurroundInstitutes(String location,
+                                                                   String radius,
+                                                                   List<String> keywords) throws URISyntaxException {
+        URI uri = new URIBuilder(poiUrl)
+                .addParameter("location", location)
+                .addParameter("radius", radius)
+                .addParameter("key", key)
+                .addParameter("keywords", String.join("|", keywords))
+                .build();
+
+        return restTemplate.exchange(
+                uri,
+                HttpMethod.GET,
+                new HttpEntity<>(httpHeaders) ,
+                PoiResponseEntity.class
+        );
     }
 
     public String getKey() {
