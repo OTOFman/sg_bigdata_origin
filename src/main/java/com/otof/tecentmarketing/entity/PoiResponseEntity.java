@@ -2,7 +2,7 @@ package com.otof.tecentmarketing.entity;
 
 import java.util.List;
 
-public class CommunitiesResponseEntity {
+public class PoiResponseEntity {
     /**
      * status : 1
      * count : 873

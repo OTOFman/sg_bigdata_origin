@@ -1,6 +1,6 @@
 package com.otof.tecentmarketing.services;
 
-import com.otof.tecentmarketing.entity.CommunitiesResponseEntity;
+import com.otof.tecentmarketing.entity.PoiResponseEntity;
 import com.otof.tecentmarketing.entity.GeoCodeResponseEntity;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,18 +58,18 @@ public class HandleMapService {
         return responseEntity;
     }
 
-    public ResponseEntity<CommunitiesResponseEntity> getCommunitiesBylocation(String location, String radius, String types) throws URISyntaxException {
+    public ResponseEntity<PoiResponseEntity> getCommunitiesByLocation(String location, String radius, String types) throws URISyntaxException {
         URI uri = new URIBuilder(poiUrl)
                 .addParameter("location", location)
                 .addParameter("radius", radius)
                 .addParameter("types", types)
                 .addParameter("key", key)
                 .build();
-        ResponseEntity<CommunitiesResponseEntity> responseEntity = restTemplate.exchange(
+        ResponseEntity<PoiResponseEntity> responseEntity = restTemplate.exchange(
                 uri,
                 HttpMethod.GET,
                 new HttpEntity<>(httpHeaders) ,
-                CommunitiesResponseEntity.class
+                PoiResponseEntity.class
         );
         return responseEntity;
     }

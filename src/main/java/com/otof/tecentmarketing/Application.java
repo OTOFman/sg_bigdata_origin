@@ -1,8 +1,6 @@
 package com.otof.tecentmarketing;
 
-import com.otof.tecentmarketing.factories.CrawlerFactory;
 import com.otof.tecentmarketing.services.HandleMapService;
-import com.otof.tecentmarketing.services.initCrawlerService;
 import com.otof.tecentmarketing.services.JsoupCrawlerService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -35,7 +33,7 @@ public class Application {
     @PostConstruct
     public void requestGeoInfo() throws URISyntaxException {
         //handleMapService.getGeoCodeByName("锦绣龙城小太阳早教中心","武汉");
-        handleMapService.getCommunitiesBylocation("114.40891,30.492457", "3000","120000");
+        handleMapService.getCommunitiesByLocation("114.40891,30.492457", "3000","072000");
     }
 
     public static void main(String[] args) {
