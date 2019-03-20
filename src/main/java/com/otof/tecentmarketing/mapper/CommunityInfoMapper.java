@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Mapper
 public interface CommunityInfoMapper {
@@ -35,7 +36,7 @@ public interface CommunityInfoMapper {
             @Result(property = "apartmentAmount", column = "apartment_amount"),
             @Result(property = "price", column = "price")
     })
-    List<CommunityInfoEntity> getCommunityInfoByNameList(List<String> communityNameList);
+    Set<CommunityInfoEntity> getCommunitiesInfoByNameList(List<String> communityNameList);
 
     class Provider {
         /* 批量插入 */

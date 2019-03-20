@@ -1,5 +1,7 @@
 package com.otof.tecentmarketing.entity;
 
+import java.util.Objects;
+
 public class CommunityInfoEntity {
 
     private String communityName;
@@ -57,6 +59,23 @@ public class CommunityInfoEntity {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommunityInfoEntity that = (CommunityInfoEntity) o;
+        return Objects.equals(communityName, that.communityName) &&
+                Objects.equals(buildYear, that.buildYear) &&
+                Objects.equals(buildingAmount, that.buildingAmount) &&
+                Objects.equals(apartmentAmount, that.apartmentAmount) &&
+                Objects.equals(price, that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(communityName, buildYear, buildingAmount, apartmentAmount, price);
     }
 }
 

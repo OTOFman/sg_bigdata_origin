@@ -37,7 +37,7 @@ public class Application {
 //        jsoupCrawlerService.getCommunityInfo();
 //    }
 
-    @PostConstruct
+//    @PostConstruct
     public void requestGeoInfo() throws URISyntaxException {
 
 //        handleMapService.getGeoCodeByName("锦绣龙城小太阳早教中心","武汉");
