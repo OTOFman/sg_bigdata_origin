@@ -6,14 +6,14 @@ public class CommunityInfoEntity {
 
     private String communityName;
     private String buildYear;
-    private String buildingAmount;
-    private String apartmentAmount;
-    private String price;
+    private int buildingAmount;
+    private int apartmentAmount;
+    private int price;
 
     public CommunityInfoEntity() {
     }
 
-    public CommunityInfoEntity(String communityName, String buildYear, String buildingAmount, String apartmentAmount, String price) {
+    public CommunityInfoEntity(String communityName, String buildYear, int buildingAmount, int apartmentAmount, int price) {
         this.communityName = communityName;
         this.buildYear = buildYear;
         this.buildingAmount = buildingAmount;
@@ -37,27 +37,27 @@ public class CommunityInfoEntity {
         this.buildYear = buildYear;
     }
 
-    public String getBuildingAmount() {
+    public int getBuildingAmount() {
         return buildingAmount;
     }
 
-    public void setBuildingAmount(String buildingAmount) {
+    public void setBuildingAmount(int buildingAmount) {
         this.buildingAmount = buildingAmount;
     }
 
-    public String getApartmentAmount() {
+    public int getApartmentAmount() {
         return apartmentAmount;
     }
 
-    public void setApartmentAmount(String apartmentAmount) {
+    public void setApartmentAmount(int apartmentAmount) {
         this.apartmentAmount = apartmentAmount;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -68,9 +68,9 @@ public class CommunityInfoEntity {
         CommunityInfoEntity that = (CommunityInfoEntity) o;
         return Objects.equals(communityName, that.communityName) &&
                 Objects.equals(buildYear, that.buildYear) &&
-                Objects.equals(buildingAmount, that.buildingAmount) &&
-                Objects.equals(apartmentAmount, that.apartmentAmount) &&
-                Objects.equals(price, that.price);
+                buildingAmount == that.buildingAmount &&
+                apartmentAmount == apartmentAmount &&
+                price == that.price;
     }
 
     @Override

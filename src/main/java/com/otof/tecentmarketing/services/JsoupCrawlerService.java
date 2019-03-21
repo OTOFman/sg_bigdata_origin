@@ -28,6 +28,7 @@ public class JsoupCrawlerService {
     }
 
     public void getCommunityInfo() {
+        logger.info("Start jsoup community detail info!");
         communitiesUrl.forEach(v -> {
             try {
                 Document document = Jsoup.connect(v).get();
@@ -40,12 +41,11 @@ public class JsoupCrawlerService {
                 String communityName = document.select("div.Rbigbt h1 b").size() !=0 ? document.select("div.Rbigbt h1 b").get(0).text() : "";
                 String price = document.select("span.prib").size() !=0 ? document.select("span.prib").text().replaceAll("[^\\d]+", "") : "";
 
-                logger.info("the communityName is " + communityName );
-                logger.info("the price is " + price );
-                logger.info("the buildYear is " + buildYear );
-                logger.info("the apartmentAmount is " + apartmentAmount );
-                logger.info("the buildingAmount is " + buildingAmount );
-                communities.add(new CommunityInfoEntity(communityName, buildYear, buildingAmount, apartmentAmount, price));
+                communities.add(new CommunityInfoEntity(communityName, buildYear,
+                        Integer.parseInt("".equals(buildingAmount) ? "0" : buildingAmount),
+                        Integer.parseInt("".equals(apartmentAmount) ? "0" : apartmentAmount),
+                        Integer.parseInt("".equals(price) ? "0" : price)));
+
                 if (++parsedCommunityNumber == 100) {
                     storeDataToDB();
                     communities.clear();

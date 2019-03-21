@@ -38,17 +38,15 @@ public class Application {
 //    }
 
 //    @PostConstruct
-    public void requestGeoInfo() throws URISyntaxException {
+//    public void requestGeoInfo() throws URISyntaxException {
 
 //        handleMapService.getGeoCodeByName("锦绣龙城小太阳早教中心","武汉");
 //        handleMapService.getCommunitiesByLocation("114.40891,30.492457", "3000","072000");
 //        handleMapService.getSurroundInstitutes("114.40891,30.492457", "3000", List.of("早教"));
 //        handleMapService.getSurroundInstitutes("114.40891,30.492457", "3000", List.of("幼儿|儿童"));
-        ResponseEntity<GeoCodeResponseEntity> geoCodeEntity = handleMapService.getGeoCodeByName("锦绣龙城小太阳早教中心","武汉");
-        String location = geoCodeEntity.getBody().getGeocodes().get(0).getLocation();
-        communityInfoService.getCommunityInfos(location, "3000", "120000");
-    }
-
+//        ResponseEntity<GeoCodeResponseEntity> geoCodeEntity = handleMapService.getGeoCodeByName("锦绣龙城小太阳早教中心","武汉");
+//        String location = geoCodeEntity.getBody().getGeocodes().get(0).getLocation();
+//    }
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(Application.class);
         springApplication.run(args);
