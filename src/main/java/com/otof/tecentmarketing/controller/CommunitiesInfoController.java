@@ -31,12 +31,11 @@ public class CommunitiesInfoController {
 
     @GetMapping(produces = "application/json")
     public Set<CommunityInfoEntity> getCommunitiesInfo(@NotNull @NotBlank @RequestParam String city,
-                                                       @NotNull @NotBlank @RequestParam String name,
-                                                       @RequestParam(defaultValue = "1") Integer page) throws URISyntaxException {
+                                                       @NotNull @NotBlank @RequestParam String name) throws URISyntaxException {
 
         ResponseEntity<GeoCodeResponseEntity> geoCodeEntity = handleMapService.getGeoCodeByName(name,city);
         String location = geoCodeEntity.getBody().getGeocodes().get(0).getLocation();
-        return communityInfoService.getCommunityInfos(location, RADIUS, APARTMENTTYPE, page);
+        return communityInfoService.getCommunityInfos(location, RADIUS, APARTMENTTYPE);
     }
 
     @GetMapping(path = "/statistics")

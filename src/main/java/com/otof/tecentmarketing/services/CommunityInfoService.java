@@ -30,16 +30,25 @@ public class CommunityInfoService {
     public CommunityInfoService() {
     }
 
-    public Set<CommunityInfoEntity> getCommunityInfos(String location, String radius, String types, int currentPage) throws URISyntaxException {
+    public Set<CommunityInfoEntity> getCommunityInfos(String location, String radius, String types) throws URISyntaxException {
+        int currentPage = 0;
+        Set<CommunityInfoEntity> communityInfoEntitySet = new HashSet<>();
         communityNameList = new ArrayList<>();
-        ResponseEntity<PoiResponseEntity> poiResponse = handleMapService.getCommunitiesByLocation(location, radius, types, currentPage);
-        PoiResponseEntity poiEntity = poiResponse.getBody();
-        if (poiEntity.getPois().size() != 0) {
-            poiEntity.getPois().stream().forEach(v -> communityNameList.add(v.getName()));
-            return communityInfoMapper.getCommunitiesInfoByNameList(communityNameList);
+
+        while ( currentPage <= maxPageNumber) {
+            ResponseEntity<PoiResponseEntity> poiResponse = handleMapService.getCommunitiesByLocation(location, radius, types, currentPage);
+            PoiResponseEntity poiEntity = poiResponse.getBody();
+            maxPageNumber = (int)Math.ceil(Double.parseDouble(poiEntity.getCount()) / 20.00);
+
+            if (poiEntity.getPois().size() != 0) {
+                poiEntity.getPois().stream().forEach(v -> communityNameList.add(v.getName()));
+                communityInfoEntitySet.addAll(communityInfoMapper.getCommunitiesInfoByNameList(communityNameList));
+            }
+            currentPage++;
         }
 
-        return new HashSet<>();
+
+        return communityInfoEntitySet;
     }
 
     public CommunityStatisticEntity getCommunityStatistic(String location, String radius, String apartmenttype) throws URISyntaxException {
@@ -49,6 +58,7 @@ public class CommunityInfoService {
             communityNameList = new ArrayList<>();
             ResponseEntity<PoiResponseEntity> poiResponse = handleMapService.getCommunitiesByLocation(location, radius, apartmenttype, currentPage);
             PoiResponseEntity poiEntity = poiResponse.getBody();
+            maxPageNumber = (int)Math.ceil(Double.parseDouble(poiEntity.getCount()) / 20.00);
             if (poiEntity.getPois().size() == 0) {
                 break;
             }
