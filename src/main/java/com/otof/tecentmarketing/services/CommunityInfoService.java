@@ -1,5 +1,6 @@
 package com.otof.tecentmarketing.services;
 
+import com.otof.tecentmarketing.Task.CallCommunitiesInfoTask;
 import com.otof.tecentmarketing.entity.CommunityInfoEntity;
 import com.otof.tecentmarketing.entity.CommunityStatisticEntity;
 import com.otof.tecentmarketing.entity.PoiResponseEntity;
@@ -12,64 +13,72 @@ import org.springframework.stereotype.Service;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @Service
 public class CommunityInfoService {
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(CommunityInfoService.class);
 
-
-    private int maxPageNumber = 100;
+    private static final int SLEEPTIME = 1000;
+    private static final double PAGEOFFSET = 20.00;
+    private static final double HANDLEPAGEPERTHREAD = 5.00;
     @Autowired
     private HandleMapService handleMapService;
     @Autowired
     private CommunityInfoMapper communityInfoMapper;
     @Autowired
     private TempTableMapper tempTableMapper;
+    @Autowired
+    private CallCommunitiesInfoTask callCommunitiesInfoTask;
     private List<String> communityNameList;
 
     public CommunityInfoService() {
     }
 
-    public Set<CommunityInfoEntity> getCommunityInfos(String location, String radius, String types) throws URISyntaxException {
-        int currentPage = 0;
-        Set<CommunityInfoEntity> communityInfoEntitySet = new HashSet<>();
-        communityNameList = new ArrayList<>();
-        tempTableMapper.deleteTempCommunitiesName();
-        while ( currentPage <= maxPageNumber) {
-            logger.info(currentPage + "page is loading");
-            ResponseEntity<PoiResponseEntity> poiResponse = handleMapService.getCommunitiesByLocation(location, radius, types, currentPage);
-            PoiResponseEntity poiEntity = poiResponse.getBody();
-            maxPageNumber = (int)Math.ceil(Double.parseDouble(poiEntity.getCount()) / 20.00);
-
-            if (poiEntity.getPois().size() != 0) {
-                poiEntity.getPois().stream().forEach(v -> communityNameList.add(v.getName()));
-            }
-            logger.info(currentPage + "page is finish load");
-            currentPage++;
-        }
-        tempTableMapper.insertTempCommunitiesName(communityNameList);
+    public Set<CommunityInfoEntity> getCommunityInfos(String location, String radius, String types) throws URISyntaxException, InterruptedException {
+        createTempCommunitiesNameTable(location, radius, types);
         return communityInfoMapper.getCommunitiesInfoByNameList();
     }
 
-    public CommunityStatisticEntity getCommunityStatistic(String location, String radius, String apartmenttype) throws URISyntaxException {
-        int currentPage = 1;
-        CommunityStatisticEntity communityStatisticEntity = new CommunityStatisticEntity();
-        while (currentPage <= maxPageNumber) {
-            communityNameList = new ArrayList<>();
-            ResponseEntity<PoiResponseEntity> poiResponse = handleMapService.getCommunitiesByLocation(location, radius, apartmenttype, currentPage);
-            PoiResponseEntity poiEntity = poiResponse.getBody();
-            maxPageNumber = (int)Math.ceil(Double.parseDouble(poiEntity.getCount()) / 20.00);
-            if (poiEntity.getPois().size() == 0) {
+    public CommunityStatisticEntity getCommunityStatistic(String location, String radius, String types) throws URISyntaxException, InterruptedException {
+        createTempCommunitiesNameTable(location, radius, types);
+        return communityInfoMapper.getCommunityStatisticByNameList();
+    }
+
+    private void createTempCommunitiesNameTable(String location, String radius, String types) throws URISyntaxException, InterruptedException {
+        List<Future> futures = new ArrayList<>();
+        communityNameList = new ArrayList<>();
+        tempTableMapper.deleteTempCommunitiesName();
+        ResponseEntity<PoiResponseEntity> poiResponse
+                = handleMapService.getCommunitiesByLocation(location, radius, types, 0);
+        PoiResponseEntity poiEntity = poiResponse.getBody();
+        int maxPageNumber = (int)Math.ceil(Double.parseDouble(poiEntity.getCount()) / PAGEOFFSET);
+        int threadNumber = (int)Math.ceil(Double.parseDouble(poiEntity.getCount()) / PAGEOFFSET / HANDLEPAGEPERTHREAD);
+
+        for (int i = 1; i <= threadNumber; i++) {
+            int minPage = (i-1)*10;
+            int maxPage = (i*10-1) < maxPageNumber ? (i*10-1) : maxPageNumber;
+            Future future = callCommunitiesInfoTask.doTaskCallCommunitiesInfo(location, radius, types, minPage, maxPage);
+            futures.add(future);
+        }
+        while (true) {
+            if (futures.stream().allMatch(v -> v.isDone())) {
+                futures.forEach(v -> {
+                    try {
+                        communityNameList.addAll((List<String>) v.get());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                });
                 break;
             }
-
-            poiEntity.getPois().stream().forEach(v -> communityNameList.add(v.getName()));
-            communityStatisticEntity.add(communityInfoMapper.getCommunityStatisticByNameList(communityNameList));
-            currentPage++;
+            Thread.sleep(SLEEPTIME);
         }
-        return communityStatisticEntity;
+        tempTableMapper.insertTempCommunitiesName(communityNameList);
     }
 }

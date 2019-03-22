@@ -31,7 +31,7 @@ public class CommunitiesInfoController {
 
     @GetMapping(produces = "application/json")
     public Set<CommunityInfoEntity> getCommunitiesInfo(@NotNull @NotBlank @RequestParam String city,
-                                                       @NotNull @NotBlank @RequestParam String name) throws URISyntaxException {
+                                                       @NotNull @NotBlank @RequestParam String name) throws URISyntaxException, InterruptedException {
 
         ResponseEntity<GeoCodeResponseEntity> geoCodeEntity = handleMapService.getGeoCodeByName(name,city);
         String location = geoCodeEntity.getBody().getGeocodes().get(0).getLocation();
@@ -40,7 +40,7 @@ public class CommunitiesInfoController {
 
     @GetMapping(path = "/statistics")
     public CommunityStatisticEntity getCommunityStatistic(@NotNull @NotBlank @RequestParam String city,
-                                                        @NotNull @NotBlank @RequestParam String name) throws URISyntaxException {
+                                                        @NotNull @NotBlank @RequestParam String name) throws URISyntaxException, InterruptedException {
         ResponseEntity<GeoCodeResponseEntity> geoCodeEntity = handleMapService.getGeoCodeByName(name,city);
         String location = geoCodeEntity.getBody().getGeocodes().get(0).getLocation();
         return communityInfoService.getCommunityStatistic(location, RADIUS, APARTMENTTYPE);

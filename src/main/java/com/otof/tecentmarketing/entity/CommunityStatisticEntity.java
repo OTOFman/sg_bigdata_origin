@@ -2,14 +2,14 @@ package com.otof.tecentmarketing.entity;
 
 public class CommunityStatisticEntity {
 
-    private int avgApartmentAmount;
-    private int avgBuildingAmount;
+    private int apartmentAmount;
+    private int buildingAmount;
     private double radius;
     private double avgPrice;
 
-    public CommunityStatisticEntity(int avgApartmentAmount, int avgBuildingAmount, double radius, double avgPrice) {
-        this.avgApartmentAmount = avgApartmentAmount;
-        this.avgBuildingAmount = avgBuildingAmount;
+    public CommunityStatisticEntity(int apartmentAmount, int buildingAmount, double radius, double avgPrice) {
+        this.apartmentAmount = apartmentAmount;
+        this.buildingAmount = buildingAmount;
         this.radius = radius;
         this.avgPrice = avgPrice;
     }
@@ -17,20 +17,20 @@ public class CommunityStatisticEntity {
     public CommunityStatisticEntity() {
     }
 
-    public int getAvgApartmentAmount() {
-        return avgApartmentAmount;
+    public int getApartmentAmount() {
+        return apartmentAmount;
     }
 
-    public void setAvgApartmentAmount(int avgApartmentAmount) {
-        this.avgApartmentAmount = avgApartmentAmount;
+    public void setApartmentAmount(int apartmentAmount) {
+        this.apartmentAmount = apartmentAmount;
     }
 
-    public int getAvgBuildingAmount() {
-        return avgBuildingAmount;
+    public int getBuildingAmount() {
+        return buildingAmount;
     }
 
-    public void setAvgBuildingAmount(int avgBuildingAmount) {
-        this.avgBuildingAmount = avgBuildingAmount;
+    public void setBuildingAmount(int buildingAmount) {
+        this.buildingAmount = buildingAmount;
     }
 
     public double getRadius() {
@@ -51,8 +51,8 @@ public class CommunityStatisticEntity {
 
     public void add(CommunityStatisticEntity other) {
         if (other != null) {
-            this.avgApartmentAmount += other.avgApartmentAmount;
-            this.avgBuildingAmount += other.avgBuildingAmount;
+            this.apartmentAmount += other.apartmentAmount;
+            this.buildingAmount += other.buildingAmount;
             this.avgPrice = (this.avgPrice + other.avgPrice) / 2;
         }
     }
