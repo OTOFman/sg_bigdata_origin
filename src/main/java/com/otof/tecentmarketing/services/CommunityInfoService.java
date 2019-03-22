@@ -4,6 +4,7 @@ import com.otof.tecentmarketing.entity.CommunityInfoEntity;
 import com.otof.tecentmarketing.entity.CommunityStatisticEntity;
 import com.otof.tecentmarketing.entity.PoiResponseEntity;
 import com.otof.tecentmarketing.mapper.CommunityInfoMapper;
+import com.otof.tecentmarketing.mapper.TempTableMapper;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ public class CommunityInfoService {
     private HandleMapService handleMapService;
     @Autowired
     private CommunityInfoMapper communityInfoMapper;
+    @Autowired
+    private TempTableMapper tempTableMapper;
     private List<String> communityNameList;
 
     public CommunityInfoService() {
@@ -34,21 +37,21 @@ public class CommunityInfoService {
         int currentPage = 0;
         Set<CommunityInfoEntity> communityInfoEntitySet = new HashSet<>();
         communityNameList = new ArrayList<>();
-
+        tempTableMapper.deleteTempCommunitiesName();
         while ( currentPage <= maxPageNumber) {
+            logger.info(currentPage + "page is loading");
             ResponseEntity<PoiResponseEntity> poiResponse = handleMapService.getCommunitiesByLocation(location, radius, types, currentPage);
             PoiResponseEntity poiEntity = poiResponse.getBody();
             maxPageNumber = (int)Math.ceil(Double.parseDouble(poiEntity.getCount()) / 20.00);
 
             if (poiEntity.getPois().size() != 0) {
                 poiEntity.getPois().stream().forEach(v -> communityNameList.add(v.getName()));
-                communityInfoEntitySet.addAll(communityInfoMapper.getCommunitiesInfoByNameList(communityNameList));
             }
+            logger.info(currentPage + "page is finish load");
             currentPage++;
         }
-
-
-        return communityInfoEntitySet;
+        tempTableMapper.insertTempCommunitiesName(communityNameList);
+        return communityInfoMapper.getCommunitiesInfoByNameList();
     }
 
     public CommunityStatisticEntity getCommunityStatistic(String location, String radius, String apartmenttype) throws URISyntaxException {

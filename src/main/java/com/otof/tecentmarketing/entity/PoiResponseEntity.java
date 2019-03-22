@@ -126,7 +126,7 @@ public class PoiResponseEntity {
         private String adname;
         private Object shopid;
         private String shopinfo;
-        private List<?> biz_type;
+        private Object biz_type;
         private List<?> importance;
         private List<?> poiweight;
         private List<?> photos;
@@ -251,11 +251,11 @@ public class PoiResponseEntity {
             this.shopinfo = shopinfo;
         }
 
-        public List<?> getBiz_type() {
+        public Object getBiz_type() {
             return biz_type;
         }
 
-        public void setBiz_type(List<?> biz_type) {
+        public void setBiz_type(Object biz_type) {
             this.biz_type = biz_type;
         }
 
