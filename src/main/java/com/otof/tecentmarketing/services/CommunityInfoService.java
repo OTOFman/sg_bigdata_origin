@@ -6,7 +6,6 @@ import com.otof.tecentmarketing.entity.CommunityStatisticEntity;
 import com.otof.tecentmarketing.entity.PoiResponseEntity;
 import com.otof.tecentmarketing.mapper.CommunityInfoMapper;
 import com.otof.tecentmarketing.mapper.TempTableMapper;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import java.util.concurrent.Future;
 
 @Service
 public class CommunityInfoService {
-    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(CommunityInfoService.class);
 
     private static final int SLEEPTIME = 1000;
     private static final double PAGEOFFSET = 20.00;
