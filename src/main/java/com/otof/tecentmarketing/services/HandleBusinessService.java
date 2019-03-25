@@ -20,7 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
-import java.util.Collections;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +40,7 @@ public class HandleBusinessService {
     private String v;
     private String session;
     private String secret;
-    private Map<String, String> immutableKeyMap;
+    private Map<String, String> paramsKeyMap;
 
     public HandleBusinessService() {
         httpHeaders = new HttpHeaders();
@@ -48,14 +48,14 @@ public class HandleBusinessService {
 
     @PostConstruct
     public void initParams() {
-        immutableKeyMap = new HashMap<>();
-        immutableKeyMap.put("app_key", appKey);
-        immutableKeyMap.put("deviceId", deviceId);
-        immutableKeyMap.put("format", format);
-        immutableKeyMap.put("v", v);
-        immutableKeyMap.put("session", session);
-        immutableKeyMap.put("sign_method", signMethod);
-        immutableKeyMap.put("category", CATEGORY);
+        paramsKeyMap = new HashMap<>();
+        paramsKeyMap.put("app_key", appKey);
+        paramsKeyMap.put("deviceId", deviceId);
+        paramsKeyMap.put("format", format);
+        paramsKeyMap.put("v", v);
+        paramsKeyMap.put("session", session);
+        paramsKeyMap.put("sign_method", signMethod);
+        paramsKeyMap.put("category", CATEGORY);
 
     }
 
@@ -65,17 +65,18 @@ public class HandleBusinessService {
             int radius,
             int page) throws IOException, NoSuchAlgorithmException, URISyntaxException {
 
-//        initParams();
-
-        immutableKeyMap.put("page", Integer.toString(page));
-        immutableKeyMap.put("radius", Integer.toString(radius));
-        immutableKeyMap.put("open_points", new OpenPointEntity(latitude, longitude).toString());
-        immutableKeyMap.put("timestamp", new Timestamp(System.currentTimeMillis()).toString());
-        String signKey = GenerateMeituanSign.signTopRequest(immutableKeyMap, secret, signMethod);
-        immutableKeyMap.put("sign", signKey);
+        paramsKeyMap.put("page", Integer.toString(page));
+        paramsKeyMap.put("radius", Integer.toString(radius));
+        paramsKeyMap.put("open_points", new OpenPointEntity(latitude, longitude).toString());
+        paramsKeyMap.put("timestamp", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Timestamp(System.currentTimeMillis())));
+        if (paramsKeyMap.get("sign") != null) {
+            paramsKeyMap.remove("sign");
+        }
+        String signKey = GenerateMeituanSign.signTopRequest(paramsKeyMap, secret, signMethod);
+        paramsKeyMap.put("sign", signKey);
 
         URI uri = new URIBuilder(businessInfoUrl)
-                .addParameters(NameValueEntity.buildNvpList(immutableKeyMap))
+                .addParameters(NameValueEntity.buildNvpList(paramsKeyMap))
                 .build();
         return restTemplate.exchange(
                 uri,

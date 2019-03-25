@@ -8,4 +8,9 @@ public class OpenPointEntity {
         this.latitude = latitude;
         this.longtitude = longtitude;
     }
+
+    @Override
+    public String toString() {
+        return "{\"latitude\":" + latitude +",\"longitude\":" + longtitude +"}";
+    }
 }
