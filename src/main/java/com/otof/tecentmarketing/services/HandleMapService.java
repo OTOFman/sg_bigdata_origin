@@ -2,6 +2,8 @@ package com.otof.tecentmarketing.services;
 
 import com.otof.tecentmarketing.entity.PoiResponseEntity;
 import com.otof.tecentmarketing.entity.GeoCodeResponseEntity;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -19,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@Getter
+@Setter
 @Service
 @ConfigurationProperties(prefix = "service.map")
 public class HandleMapService {
@@ -90,29 +94,5 @@ public class HandleMapService {
                 new HttpEntity<>(httpHeaders) ,
                 PoiResponseEntity.class
         );
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getGeoCodeUrl() {
-        return geoCodeUrl;
-    }
-
-    public void setGeoCodeUrl(String geoCodeUrl) {
-        this.geoCodeUrl = geoCodeUrl;
-    }
-
-    public String getPoiUrl() {
-        return poiUrl;
-    }
-
-    public void setPoiUrl(String poiUrl) {
-        this.poiUrl = poiUrl;
     }
 }

@@ -44,22 +44,5 @@ public class Application {
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
         SpringApplication springApplication = new SpringApplication(Application.class);
         springApplication.run(args);
-
-//        Map<String, String> param = new HashMap<String, String>(){{
-//            put("app_key", "1000055");
-//            put("deviceId", "JH-289");
-//            put("category", "亲子照");
-//            put("timestamp", "2019-03-24 11:30:00");
-//            put("format", "json");
-//            put("v", "1");
-//            put("open_points", "{\"latitude\":114.3,\"longitude\":30.4}");
-//            put("radius", "1000");
-//            put("sign_method", "MD5");
-//            put("page", "1");
-//            put("session", "c1fc1773a27d47e988725bc6df150626dbda0b4d");
-//        }};
-//
-//        String signKey = GenerateMeituanSign.signTopRequest(param, "4e0d1be81540c4d1f0868d329b3229467f071f6c", "MD5");
-//        System.out.println(signKey);
     }
 }

@@ -4,6 +4,8 @@ import com.otof.tecentmarketing.entity.BusinessResponseEntity;
 import com.otof.tecentmarketing.entity.NameValueEntity;
 import com.otof.tecentmarketing.entity.OpenPointEntity;
 import com.otof.tecentmarketing.utils.GenerateMeituanSign;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -24,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+@Setter
+@Getter
 @Service
 @ConfigurationProperties(prefix = "service.business")
 public class HandleBusinessService {
@@ -84,69 +88,5 @@ public class HandleBusinessService {
                 new HttpEntity<>(httpHeaders),
                 BusinessResponseEntity.class
         );
-    }
-
-    public String getBusinessInfoUrl() {
-        return businessInfoUrl;
-    }
-
-    public void setBusinessInfoUrl(String businessInfoUrl) {
-        this.businessInfoUrl = businessInfoUrl;
-    }
-
-    public String getAppKey() {
-        return appKey;
-    }
-
-    public void setAppKey(String appKey) {
-        this.appKey = appKey;
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    public String getSignMethod() {
-        return signMethod;
-    }
-
-    public void setSignMethod(String signMethod) {
-        this.signMethod = signMethod;
-    }
-
-    public String getFormat() {
-        return format;
-    }
-
-    public void setFormat(String format) {
-        this.format = format;
-    }
-
-    public String getV() {
-        return v;
-    }
-
-    public void setV(String v) {
-        this.v = v;
-    }
-
-    public String getSession() {
-        return session;
-    }
-
-    public void setSession(String session) {
-        this.session = session;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
     }
 }
