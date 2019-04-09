@@ -1,12 +1,12 @@
 package com.otof.tecentmarketing.services;
 
-import com.otof.tecentmarketing.entity.PoiResponseEntity;
+import com.otof.tecentmarketing.configuration.MapConfiguration;
 import com.otof.tecentmarketing.entity.GeoCodeResponseEntity;
+import com.otof.tecentmarketing.entity.PoiResponseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,15 +24,13 @@ import java.util.Map;
 @Getter
 @Setter
 @Service
-@ConfigurationProperties(prefix = "service.map")
 public class HandleMapService {
 
-    private String key;
-    private String geoCodeUrl;
-    private String poiUrl;
     private Map<String, String> immutableKeyMap;
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private MapConfiguration mapConfiguration;
     private HttpHeaders httpHeaders;
     public HandleMapService() {
         httpHeaders = new HttpHeaders();
@@ -40,7 +38,7 @@ public class HandleMapService {
 
     @PostConstruct
     public void initMapConfig() {
-        immutableKeyMap = Collections.singletonMap("key", key);
+        immutableKeyMap = Collections.singletonMap("key", mapConfiguration.getKey());
         immutableKeyMap.forEach( (k, v) -> httpHeaders.set(k, v));
     }
 
@@ -48,10 +46,10 @@ public class HandleMapService {
 
         HttpEntity<?> requestEntity = new HttpEntity<>(httpHeaders);
 
-        URI uri = new URIBuilder(geoCodeUrl)
+        URI uri = new URIBuilder(mapConfiguration.getGeoCodeUrl())
                 .addParameter("address", name)
                 .addParameter("city", city)
-                .addParameter("key", key)
+                .addParameter("key", mapConfiguration.getKey())
                 .build();
 
         return restTemplate.exchange(
@@ -63,12 +61,12 @@ public class HandleMapService {
     }
 
     public ResponseEntity<PoiResponseEntity> getCommunitiesByLocation(String location, String radius, String types, int page) throws URISyntaxException {
-        URI uri = new URIBuilder(poiUrl)
+        URI uri = new URIBuilder(mapConfiguration.getPoiUrl())
                 .addParameter("location", location)
                 .addParameter("radius", radius)
                 .addParameter("types", types)
                 .addParameter("page", Integer.toString(page))
-                .addParameter("key", key)
+                .addParameter("key", mapConfiguration.getKey())
                 .build();
         return restTemplate.exchange(
                 uri,
@@ -81,10 +79,10 @@ public class HandleMapService {
     public ResponseEntity<PoiResponseEntity> getSurroundInstitutes(String location,
                                                                    String radius,
                                                                    List<String> keywords) throws URISyntaxException {
-        URI uri = new URIBuilder(poiUrl)
+        URI uri = new URIBuilder(mapConfiguration.getPoiUrl())
                 .addParameter("location", location)
                 .addParameter("radius", radius)
-                .addParameter("key", key)
+                .addParameter("key", mapConfiguration.getKey())
                 .addParameter("keywords", String.join("|", keywords))
                 .build();
 

@@ -2,14 +2,14 @@ package com.otof.tecentmarketing.entity;
 
 import java.util.List;
 
-public class PoiResponseEntity {
+public class SurroundInstitutesResponseEntity {
     /**
      * status : 1
-     * count : 873
+     * count : 6
      * info : OK
      * infocode : 10000
      * suggestion : {"keywords":[],"cities":[]}
-     * pois : [{"id":"B0FFJN8T0Y","parent":"","name":"云水居","type":"商务住宅;商务住宅相关;商务住宅相关","typecode":"120000","biz_type":[],"address":"关山大道328号中杰阳光哈乐城A3幢2层4-5号","location":"114.408928,30.492620","tel":"027-87108986","distance":"18","biz_ext":{"rating":"","cost":""},"pname":"湖北省","cityname":"武汉市","adname":"洪山区","importance":[],"shopid":"","shopinfo":"0","poiweight":[],"photos":[]}]
+     * pois : [{"id":"B0FFFFNMNH","parent":[],"name":"花园宝贝亲子生活馆","type":"生活服务;婴儿服务场所;婴儿游泳馆","typecode":"072001","biz_type":[],"address":"关山一路哈乐城A3-103(金地太阳城对面,哈乐城与保利时代之间小路往里200米,保利时代北门)","location":"114.408973,30.492614","tel":"15327173270","distance":"72","biz_ext":{"rating":"3.0","cost":[]},"pname":"湖北省","cityname":"武汉市","adname":"洪山区","importance":[],"shopid":[],"shopinfo":"0","poiweight":[],"photos":[{"url":"http://store.is.autonavi.com/showpic/fab7b4ddbb930e564fd24422a14189cc","title":[],"provider":[]}]}]
      */
 
     private String status;

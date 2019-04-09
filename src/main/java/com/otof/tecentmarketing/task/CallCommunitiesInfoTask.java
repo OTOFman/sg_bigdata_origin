@@ -1,4 +1,4 @@
-package com.otof.tecentmarketing.Task;
+package com.otof.tecentmarketing.task;
 
 import com.otof.tecentmarketing.entity.PoiResponseEntity;
 import com.otof.tecentmarketing.services.HandleMapService;

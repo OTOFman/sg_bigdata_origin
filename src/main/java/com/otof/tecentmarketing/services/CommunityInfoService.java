@@ -1,6 +1,6 @@
 package com.otof.tecentmarketing.services;
 
-import com.otof.tecentmarketing.Task.CallCommunitiesInfoTask;
+import com.otof.tecentmarketing.task.CallCommunitiesInfoTask;
 import com.otof.tecentmarketing.entity.CommunityInfoEntity;
 import com.otof.tecentmarketing.entity.CommunityStatisticEntity;
 import com.otof.tecentmarketing.entity.PoiResponseEntity;
