@@ -19,4 +19,5 @@ public class MapConfiguration {
     private String babyTypes;
     private String competitorTypes;
     private String competitorKeywords;
+    private String trafficTypes;
 }

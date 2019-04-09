@@ -25,7 +25,7 @@ import java.util.List;
 @Setter
 @Getter
 @Service
-public class CooperatorStatisticService {
+public class CooperatorStatisticService implements StatisticService {
 
     @Autowired
     private RestTemplate restTemplate;
@@ -47,16 +47,12 @@ public class CooperatorStatisticService {
     }
 
     public CooperatorEvaluation getCooperatorEvaluation(String location) throws URISyntaxException, InterruptedException {
-        List<PoisEntity> poisEntityList = getCooperatorStatisticResult(location);
+        List<PoisEntity> poisEntityList = getSurroundPois(location, KiloEnum.THREEKILOMETER.radius);
         return cooperatorStatisticRules.analysisCooperators(poisEntityList);
     }
 
-    public List<PoisEntity> getCooperatorStatisticResult(String location) throws URISyntaxException, InterruptedException {
-        return getSurroundCooperators(location, KiloEnum.THREEKILOMETER.radius);
-
-    }
-
-    private List<PoisEntity> getSurroundCooperators(String location, String radius) throws URISyntaxException, InterruptedException {
+    @Override
+    public List<PoisEntity> getSurroundPois(String location, String radius) throws URISyntaxException, InterruptedException {
 
         URI uri = new URIBuilder(mapConfiguration.getPoiUrl())
                 .addParameter("location", location)

@@ -54,11 +54,7 @@ public class CompetitorStatisticRules {
     }
 
     private boolean isStarInstitute(String name) {
-        return Arrays.stream(StarInstitutesEnum.values()).anyMatch(v -> {
-            if (name.contains(v.getName())){
-                System.out.println(name);
-            }
-            return name.contains(v.getName());});
+        return Arrays.stream(StarInstitutesEnum.values()).anyMatch(v -> name.contains(v.getName()));
     }
 
     private int getStarInstituteAmount(List<PoisEntity> poisEntityList) {

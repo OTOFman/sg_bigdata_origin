@@ -5,10 +5,10 @@ import com.otof.tecentmarketing.entity.PoiResponseEntity;
 import com.otof.tecentmarketing.entity.PoisEntity;
 import com.otof.tecentmarketing.entity.RequestCretiraEntity;
 import com.otof.tecentmarketing.entity.SurroundInstitutesResponseEntity;
-import com.otof.tecentmarketing.entity.evaluation.CompetitorEvaluation;
+import com.otof.tecentmarketing.entity.evaluation.TrafficEvaluation;
 import com.otof.tecentmarketing.enums.KiloEnum;
 import com.otof.tecentmarketing.requests.MultiplePageRequest;
-import com.otof.tecentmarketing.rules.CompetitorStatisticRules;
+import com.otof.tecentmarketing.rules.TrafficStatisticRules;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,25 +27,22 @@ import java.util.List;
 
 @Getter
 @Setter
-@Service
 @NoArgsConstructor
-public class CompetitorStatisticService implements StatisticService {
+@Service
+public class TrafficStatisticService implements StatisticService {
 
+    @Autowired
+    private MapConfiguration mapConfiguration;
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
-    private HttpHeaders httpHeaders;
-    @Autowired
-    private CompetitorStatisticRules competitorStatisticRules;
-    @Autowired
     private MultiplePageRequest multiplePageRequest;
     @Autowired
-    private MapConfiguration mapConfiguration;
+    private TrafficStatisticRules trafficStatisticRules;
 
-
-    public CompetitorEvaluation getCompetitorEvaluation(String location) throws URISyntaxException, InterruptedException {
-        List<PoisEntity> poisEntityList = getSurroundPois(location, KiloEnum.THREEKILOMETER.radius);
-        return competitorStatisticRules.analysisCompetitors(poisEntityList);
+    public TrafficEvaluation getTrafficEvaluation(String location) throws URISyntaxException, InterruptedException {
+        List<PoisEntity> poisEntityList = getSurroundPois(location, KiloEnum.ONEKILOMETER.radius);
+        return trafficStatisticRules.analysisTraffic(poisEntityList);
     }
 
     @Override
@@ -54,21 +51,20 @@ public class CompetitorStatisticService implements StatisticService {
         URI uri = new URIBuilder(mapConfiguration.getPoiUrl())
                 .addParameter("location", location)
                 .addParameter("radius", radius)
-                .addParameter("types", mapConfiguration.getCompetitorTypes())
-                .addParameter("keywords", "早教")
+                .addParameter("types", mapConfiguration.getTrafficTypes())
                 .addParameter("key", mapConfiguration.getKey())
                 .build();
 
-        HttpEntity<?> httpEntity = new HttpEntity<>(httpHeaders);
+        HttpEntity<?> httpEntity = new HttpEntity<>(new HttpHeaders());
         ResponseEntity<SurroundInstitutesResponseEntity> responseEntity = restTemplate.exchange(
                 uri,
                 HttpMethod.GET,
                 httpEntity,
                 SurroundInstitutesResponseEntity.class
         );
-        String totalAmount = responseEntity.getBody().getCount();
-        RequestCretiraEntity requestCretiraEntity = new RequestCretiraEntity(uri, HttpMethod.GET, PoiResponseEntity.class, httpHeaders);
-        return multiplePageRequest.getAllResultsByRequest(requestCretiraEntity, totalAmount);
 
+        String totalAmount = responseEntity.getBody().getCount();
+        RequestCretiraEntity requestCretiraEntity = new RequestCretiraEntity(uri, HttpMethod.GET, PoiResponseEntity.class, new HttpHeaders());
+        return multiplePageRequest.getAllResultsByRequest(requestCretiraEntity, totalAmount);
     }
 }

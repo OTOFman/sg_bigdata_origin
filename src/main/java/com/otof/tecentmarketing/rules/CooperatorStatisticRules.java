@@ -23,14 +23,15 @@ public class CooperatorStatisticRules {
     private Map<String, List<PoisEntity>> distancePoiMap;
 
     public CooperatorStatisticRules() {
+
+    }
+
+    public CooperatorEvaluation analysisCooperators(List<PoisEntity> poisEntityList) {
         distancePoiMap = new HashMap<String, List<PoisEntity>>(){{
             put("nearby", new ArrayList<>());
             put("middleDistance", new ArrayList<>());
             put("faraway", new ArrayList<>());
         }};
-    }
-
-    public CooperatorEvaluation analysisCooperators(List<PoisEntity> poisEntityList) {
         initBasicData(poisEntityList);
         return new CooperatorEvaluation(cooperatorAmount, evaluateCooperator());
     }

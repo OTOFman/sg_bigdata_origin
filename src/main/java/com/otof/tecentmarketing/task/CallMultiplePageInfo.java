@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -21,7 +22,7 @@ public class CallMultiplePageInfo {
     private HandleMultiplePageRequest handleMultiplePageRequest;
 
     @Async
-    public Future<List> doTaskCallMultiplePageInfo(RequestCretiraEntity requestCretiraEntity, int minPage, int maxPage) {
+    public Future<List> doTaskCallMultiplePageInfo(RequestCretiraEntity requestCretiraEntity, int minPage, int maxPage) throws URISyntaxException {
         int currentPage = minPage;
         List<PoisEntity> responseList = new ArrayList<>();
         while (currentPage <= maxPage) {

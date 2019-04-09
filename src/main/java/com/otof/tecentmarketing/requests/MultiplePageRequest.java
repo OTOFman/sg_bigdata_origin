@@ -6,6 +6,7 @@ import com.otof.tecentmarketing.task.CallMultiplePageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -21,14 +22,14 @@ public class MultiplePageRequest {
     @Autowired
     private CallMultiplePageInfo callMultiplePageInfo;
 
-    public List<PoisEntity> getAllResultsByRequest(RequestCretiraEntity requestCretiraEntity, String totalAmount) throws InterruptedException {
+    public List<PoisEntity> getAllResultsByRequest(RequestCretiraEntity requestCretiraEntity, String totalAmount) throws InterruptedException, URISyntaxException {
         List<PoisEntity> poisEntityList = new ArrayList<>();
         int maxPageNumber = (int)Math.ceil(Double.parseDouble(totalAmount) / PAGEOFFSET);
         int threadNumber = (int)Math.ceil(Double.parseDouble(totalAmount) / PAGEOFFSET / HANDLEPAGEPERTHREAD);
         List<Future> futures = new ArrayList<>();
         for (int i = 1; i <= threadNumber; i++) {
-            int minPage = (i-1)*10;
-            int maxPage = (i*10-1) < maxPageNumber ? (i*10-1) : maxPageNumber;
+            int minPage = (i-1)*HANDLEPAGEPERTHREAD + 1;
+            int maxPage = (i*HANDLEPAGEPERTHREAD) < maxPageNumber ? (i*HANDLEPAGEPERTHREAD) : maxPageNumber;
             Future future = callMultiplePageInfo.doTaskCallMultiplePageInfo(requestCretiraEntity, minPage, maxPage);
             futures.add(future);
         }
