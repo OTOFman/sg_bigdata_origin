@@ -1,6 +1,5 @@
 package com.otof.tecentmarketing.controller;
 
-import com.otof.tecentmarketing.configuration.MapConfiguration;
 import com.otof.tecentmarketing.entity.BusinessResponseEntity;
 import com.otof.tecentmarketing.entity.GeoCodeResponseEntity;
 import com.otof.tecentmarketing.entity.SiteSelectionResultEntity;

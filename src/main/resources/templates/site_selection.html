@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8"/>
+    <title>Thymeleaf</title>
+
+    <link rel="stylesheet" href="../static/css/site_selection.css" th:href="@{/css/site_selection.css}"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+</head>
+<body>
+    <canvas id="siteSelectionResult"></canvas>
+</body>
+
+<script>
+    let radar_result = "[[${radar_result}]]";
+</script>
+<script rel="script" th:src="@{/js/site_selection.js}"></script>
+</html>
+
