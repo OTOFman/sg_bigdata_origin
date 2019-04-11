@@ -4,6 +4,7 @@
     <title>Thymeleaf</title>
 
     <link rel="stylesheet" href="../static/css/site_selection.css" th:href="@{/css/site_selection.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/semantic/out/semantic.css" th:href="@{/semantic/out/semantic.css}" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
@@ -12,8 +13,8 @@
     <canvas id="siteSelectionResult"></canvas>
 </body>
 
-<script>
-    let radar_result = "[[${radar_result}]]";
+<script th:inline="javascript">
+    let radar_result = [[${radar_result}]];
 </script>
 <script rel="script" th:src="@{/js/site_selection.js}"></script>
 </html>

@@ -1,2 +1,4 @@
 .idea
 marketing.img
+node_modules
+/src/main/resources/static/semantic
