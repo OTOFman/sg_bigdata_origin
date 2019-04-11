@@ -13,7 +13,7 @@
 <div class="ui container">
     <div class="ui large icon input">
         <input name="searchAddress" type="text" placeholder="请输入您的位置">
-        <i class="link search icon"  onclick="f()"></i>
+        <i class="link search icon"  onclick="getEvaluationRadarResult()"></i>
     </div>
 </div>
     <canvas id="siteSelectionResult"></canvas>
@@ -21,7 +21,7 @@
 
 <script th:inline="javascript">
     let radar_result = [[${radar_result}]];
-    function f() {
+    function getEvaluationRadarResult() {
         location.href = "/site_selection_radar?instituteName=" + document.getElementsByName("searchAddress")[0].value;
     }
 </script>
