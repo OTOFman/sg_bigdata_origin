@@ -1,5 +1,7 @@
 package com.otof.tecentmarketing.controller;
 
+import com.otof.tecentmarketing.entity.GeoCodeResponseEntity;
+import com.otof.tecentmarketing.services.HandleMapService;
 import com.otof.tecentmarketing.services.SiteSelectionStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,11 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 @Controller
 public class SiteSelectionController {
     @Autowired
     private SiteSelectionStatisticService siteSelectionStatisticService;
+    @Autowired
+    private HandleMapService handleMapService;
 
     @RequestMapping(path = "/hello/{name}",method = RequestMethod.GET)
     public String hello(Model model, @PathVariable String name) {
@@ -20,8 +25,17 @@ public class SiteSelectionController {
     }
 
     @GetMapping(path = "/site_selection")
-    public String getSiteSelectionRadar(@RequestParam String location, Model model) throws URISyntaxException, InterruptedException {
-        model.addAttribute("radar_result", siteSelectionStatisticService.getThreeDimensionResult(location));
+    public String getSiteSelectionPage() {
+        return "site_selection";
+    }
+
+    @GetMapping(path = "/site_selection_radar")
+    public String getSiteSelectionRadar(@RequestParam String instituteName, Model model) throws URISyntaxException, InterruptedException {
+        List<GeoCodeResponseEntity.GeocodesEntity> geocodesEntityList = handleMapService.getGeoCodeByName(instituteName, "武汉").getBody().getGeocodes();
+        if (geocodesEntityList.isEmpty()) {
+            return null;
+        }
+        model.addAttribute("radar_result", siteSelectionStatisticService.getThreeDimensionResult(geocodesEntityList.get(0).getLocation()));
         return "site_selection";
     }
 }

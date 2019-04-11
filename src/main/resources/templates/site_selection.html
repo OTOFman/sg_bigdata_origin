@@ -10,11 +10,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 </head>
 <body>
+<div class="ui container">
+    <div class="ui large icon input">
+        <input name="searchAddress" type="text" placeholder="请输入您的位置">
+        <i class="link search icon"  onclick="f()"></i>
+    </div>
+</div>
     <canvas id="siteSelectionResult"></canvas>
 </body>
 
 <script th:inline="javascript">
     let radar_result = [[${radar_result}]];
+    function f() {
+        location.href = "/site_selection_radar?instituteName=" + document.getElementsByName("searchAddress")[0].value;
+    }
 </script>
 <script rel="script" th:src="@{/js/site_selection.js}"></script>
 </html>
