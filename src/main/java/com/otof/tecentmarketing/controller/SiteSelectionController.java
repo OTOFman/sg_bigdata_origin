@@ -26,7 +26,7 @@ public class SiteSelectionController {
 
     @GetMapping(path = "/site_selection")
     public String getSiteSelectionPage() {
-        return "site_selection";
+        return "site_selection/site_selection_index";
     }
 
     @GetMapping(path = "/site_selection_radar")
@@ -36,6 +36,6 @@ public class SiteSelectionController {
             return null;
         }
         model.addAttribute("radar_result", siteSelectionStatisticService.getThreeDimensionResult(geocodesEntityList.get(0).getLocation()));
-        return "site_selection";
+        return "site_selection/site_selection_index";
     }
 }

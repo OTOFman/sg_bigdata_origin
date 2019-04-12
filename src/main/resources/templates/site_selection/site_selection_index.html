@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org">
+        <meta charset="UTF-8"/>
+        <title>Thymeleaf</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+        <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="../static/semantic/out/semantic.js" th:src="@{/semantic/out/semantic.js}"></script>
+
+        <link rel="stylesheet" href="../static/css/site_selection.css" th:href="@{/css/site_selection.css}"/>
+        <link rel="stylesheet" type="text/css" href="../static/semantic/out/semantic.css" th:href="@{/semantic/out/semantic.css}" />
+
+    </head>
+    <body>
+        <div class="ui container">
+            <div class="ui large icon input">
+                <input name="searchAddress" type="text" placeholder="请输入您的位置">
+                <i class="link search icon"  onclick="getEvaluationRadarResult()"></i>
+            </div>
+        </div>
+        <div class="picture-content ui container">
+            <div class="ui stackable equal width grid">
+                <div class="ten wide column" style="background-color: red"></div>
+                <div class="six wide column">
+                    <canvas id="siteSelectionResult"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="evaluation-content ui container">
+            <div class="ui top attached tabular menu">
+                <a class="item" data-tab="first">交通状况</a>
+                <a class="item" data-tab="second">竞业状况</a>
+                <a class="item active" data-tab="third">异业状况</a>
+            </div>
+            <div th:insert="site_selection/fragments/tab_info" class="ui bottom attached tab segment" data-tab="first">
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="second">
+                Second
+            </div>
+            <div class="ui bottom attached tab segment active" data-tab="third">
+                Third
+            </div>
+        </div>
+
+    </body>
+
+    <script th:inline="javascript">
+        let radar_result = [[${radar_result}]];
+        function getEvaluationRadarResult() {
+            location.href = "/site_selection_radar?instituteName=" + document.getElementsByName("searchAddress")[0].value;
+        }
+    </script>
+    <script rel="script" th:src="@{/js/site_selection.js}"></script>
+</html>
+

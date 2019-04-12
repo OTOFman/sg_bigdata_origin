@@ -10,3 +10,5 @@ window.onload = function() {
         }
     });
 };
+
+$('.menu .item').tab();
