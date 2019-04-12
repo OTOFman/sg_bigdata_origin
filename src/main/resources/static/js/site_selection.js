@@ -7,13 +7,6 @@ window.onload = function() {
             datasets: [radar_result]
         },
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
         }
     });
 };

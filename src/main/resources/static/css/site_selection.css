@@ -1,4 +1,19 @@
-#myChart {
-    width: 500px;
-    height: 500px;
+#siteSelectionResult {
+    width: 60%;
+    height: 60%;
+}
+
+.picture-content.ui.container {
+    height: 50%;
+    margin: 1rem 0;
+}
+
+.ui.container .grid {
+    height: 100%;
+}
+
+.evaluation-content.ui.container {
+    height: 30%;
+    background-color: blue;
+    margin: 1rem 0;
 }
