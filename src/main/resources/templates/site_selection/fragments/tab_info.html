@@ -1,7 +1,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <body>
-        <div th:fragment="traffic" >
-            <p>aaa</p>
+        <div th:fragment="traffic (trafficEvaluation)" >
+            <h2>交通评估根据目标地周边<span>1000m</span>内交通状况分析得出，从轨道交通、公共交通及私家车停车场等多个维度出发进行分析</h2>
+            <table class="ui inverted orange table">
+                <thead>
+                    <tr>
+                        <th>交通评估</th>
+                        <th>地铁轻轨</th>
+                        <th>公交车站</th>
+                        <th>停车场</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+<!--                        <td th:text="${trafficEvaluation.evaluation}"></td>-->
+<!--                        <td th:text="${trafficEvaluation.metroAmount}></td>-->
+<!--                        <td th:text="${trafficEvaluation.busStationAmount}></td>-->
+<!--                        <td th:text="${trafficEvaluation.parkingAmount}></td>-->
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>

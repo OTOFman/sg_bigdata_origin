@@ -2,6 +2,9 @@ package com.otof.tecentmarketing.services;
 
 import com.otof.tecentmarketing.entity.SiteSelectionResultEntity;
 import com.otof.tecentmarketing.entity.display.ThreeDimensionRadar;
+import com.otof.tecentmarketing.entity.evaluation.CompetitorEvaluation;
+import com.otof.tecentmarketing.entity.evaluation.CooperatorEvaluation;
+import com.otof.tecentmarketing.entity.evaluation.TrafficEvaluation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,11 +40,19 @@ public class SiteSelectionStatisticService {
     public ThreeDimensionRadar getThreeDimensionResult(String location) throws URISyntaxException, InterruptedException {
         ThreeDimensionRadar threeDimensionRadar = new ThreeDimensionRadar();
         List<Integer> dataList = new ArrayList<>();
-        dataList.add(competitorStatisticService.getCompetitorEvaluation(location).getEvaluation());
-        dataList.add(cooperatorStatisticService.getCooperatorEvaluation(location).getEvaluation());
-        dataList.add(trafficStatisticService.getTrafficEvaluation(location).getEvaluation());
-        threeDimensionRadar.setData(dataList);
-        threeDimensionRadar.setLabel("交通-竞业-异业评估");
+        CompetitorEvaluation competitorEvaluation = competitorStatisticService.getCompetitorEvaluation(location);
+        CooperatorEvaluation cooperatorEvaluation = cooperatorStatisticService.getCooperatorEvaluation(location);
+        TrafficEvaluation trafficEvaluation = trafficStatisticService.getTrafficEvaluation(location);
+
+        dataList.add(competitorEvaluation.getEvaluation());
+        dataList.add(cooperatorEvaluation.getEvaluation());
+        dataList.add(trafficEvaluation.getEvaluation());
+
+        threeDimensionRadar.getRadarData().setData(dataList);
+        threeDimensionRadar.getRadarData().setLabel("交通-竞业-异业评估");
+        threeDimensionRadar.setCompetitorEvaluation(competitorEvaluation);
+        threeDimensionRadar.setCooperatorEvaluation(cooperatorEvaluation);
+        threeDimensionRadar.setTrafficEvaluation(trafficEvaluation);
         return threeDimensionRadar;
     }
 }

@@ -10,8 +10,9 @@
 
         <link rel="stylesheet" href="../static/css/site_selection.css" th:href="@{/css/site_selection.css}"/>
         <link rel="stylesheet" type="text/css" href="../static/semantic/out/semantic.css" th:href="@{/semantic/out/semantic.css}" />
+        <script rel="script" th:src="@{/js/site_selection.js}"></script>
 
-    </head>
+        </head>
     <body>
         <div class="ui container">
             <div class="ui large icon input">
@@ -33,7 +34,7 @@
                 <a class="item" data-tab="second">竞业状况</a>
                 <a class="item active" data-tab="third">异业状况</a>
             </div>
-            <div th:insert="site_selection/fragments/tab_info" class="ui bottom attached tab segment" data-tab="first">
+            <div th:insert="site_selection/fragments/tab_info :: traffic(trafficEvaluation='${radar_result.trafficEvaluation}')" class="ui bottom attached tab segment" data-tab="first">
             </div>
             <div class="ui bottom attached tab segment" data-tab="second">
                 Second
@@ -46,11 +47,15 @@
     </body>
 
     <script th:inline="javascript">
-        let radar_result = [[${radar_result}]];
+        let reponseFromServer = [[${radar_result}]];
+        if (reponseFromServer != null) {
+            let radar_result = [reponseFromServer.radarData];
+            $(this).drawRadar(radar_result);
+        }
+
         function getEvaluationRadarResult() {
             location.href = "/site_selection_radar?instituteName=" + document.getElementsByName("searchAddress")[0].value;
         }
     </script>
-    <script rel="script" th:src="@{/js/site_selection.js}"></script>
 </html>
 
