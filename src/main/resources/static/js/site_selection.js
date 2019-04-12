@@ -1,4 +1,6 @@
-$('.menu .item').tab();
+$(document).ready(function(){
+    $('.menu .item').tab();
+});
 
 $.fn.drawRadar = function (radar_result) {
     var ctx = document.getElementById('siteSelectionResult');

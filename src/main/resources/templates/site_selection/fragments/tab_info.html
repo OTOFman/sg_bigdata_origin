@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <body>
-        <div th:fragment="traffic (trafficEvaluation)" >
-            <h2>交通评估根据目标地周边<span>1000m</span>内交通状况分析得出，从轨道交通、公共交通及私家车停车场等多个维度出发进行分析</h2>
+        <div th:fragment="traffic (trafficEvaluation)">
+            <p>交通评估根据目标地周边<span>1000m</span>内交通状况分析得出，从轨道交通、公共交通及私家车停车场等多个维度出发进行分析</p>
             <table class="ui inverted orange table">
                 <thead>
                     <tr>
@@ -13,11 +14,49 @@
                 </thead>
                 <tbody>
                     <tr>
-<!--                        <td th:text="${trafficEvaluation.evaluation}"></td>-->
-<!--                        <td th:text="${trafficEvaluation.metroAmount}></td>-->
-<!--                        <td th:text="${trafficEvaluation.busStationAmount}></td>-->
-<!--                        <td th:text="${trafficEvaluation.parkingAmount}></td>-->
+                        <td th:text="${trafficEvaluation.evaluation}"></td>
+                        <td th:text="${trafficEvaluation.metroAmount}"></td>
+                        <td th:text="${trafficEvaluation.busStationAmount}"></td>
+                        <td th:text="${trafficEvaluation.parkingAmount}"></td>
                     </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:fragment="competition (competitorEvaluation)">
+            <p>竞业状况根据目标地周边3000m内早教机构分析得出，下列机构根据市场状况分为一线机构<span>(金宝贝、美吉姆、积木宝贝、东方爱婴、悦宝园、纽约国际、红黄蓝、新爱婴、爱乐、亲亲袋鼠)</span>和普通机构两类</p>
+            <table class="ui inverted orange table">
+                <thead>
+                <tr>
+                    <th>竞业评估</th>
+                    <th>一线机构</th>
+                    <th>普通机构</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${competitorEvaluation.evaluation}"></td>
+                    <td th:text="${competitorEvaluation.starCompetitorAmount}"></td>
+                    <td th:text="${competitorEvaluation.evaluation}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:fragment="coorperation (cooperatorEvaluation)">
+            <p>异业状况根据目标地周边3000m内适合于早教园区进行异业合作的机构统计/p>
+            <table class="ui inverted orange table">
+                <thead>
+                <tr>
+                    <th>异业评估</th>
+                    <th>机构数量</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${cooperatorEvaluation.evaluation}"></td>
+                    <td th:text="${cooperatorEvaluation.cooperatorAmount}"></td>
+                </tr>
                 </tbody>
             </table>
         </div>
