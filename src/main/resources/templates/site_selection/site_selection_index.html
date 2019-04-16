@@ -10,19 +10,19 @@
 
         <link rel="stylesheet" href="../static/css/site_selection.css" th:href="@{/css/site_selection.css}"/>
         <link rel="stylesheet" type="text/css" href="../static/semantic/out/semantic.css" th:href="@{/semantic/out/semantic.css}" />
-        <script rel="script" th:src="@{/js/site_selection.js}"></script>
+        <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=e70e70fc0c617d13aa771071fa154138"></script>
 
         </head>
     <body>
         <div class="ui container">
             <div class="ui large icon input">
                 <input name="searchAddress" type="text" placeholder="请输入您的位置">
-                <i class="link search icon"  onclick="getEvaluationRadarResult()"></i>
+                <i class="link search icon"  onclick="$(this).getEvaluationRadarResult()"></i>
             </div>
         </div>
         <div class="picture-content ui container">
             <div class="ui stackable equal width grid">
-                <div class="ten wide column" style="background-color: red"></div>
+                <div th:insert="site_selection/fragments/auto_navi_map :: map" class="ten wide column"></div>
                 <div class="six wide column">
                     <canvas id="siteSelectionResult"></canvas>
                 </div>
@@ -43,16 +43,18 @@
         </div>
 
     </body>
+        <script th:inline="javascript">
+            window.onload = function () {
+                var map = new AMap.Map('auto_navi_map');
+            }
+        </script>
+        <script rel="script" th:src="@{/js/site_selection.js}"></script>
 
-    <script th:inline="javascript">
+        <script th:inline="javascript">
         let reponseFromServer = [[${radar_result}]];
         if (reponseFromServer != null) {
             let radar_result = [reponseFromServer.radarData];
             $(this).drawRadar(radar_result);
-        }
-
-        function getEvaluationRadarResult() {
-            location.href = "/site_selection_radar?instituteName=" + document.getElementsByName("searchAddress")[0].value;
         }
     </script>
 </html>

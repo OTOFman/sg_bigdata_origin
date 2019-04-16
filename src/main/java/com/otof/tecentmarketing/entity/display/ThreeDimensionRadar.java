@@ -20,6 +20,9 @@ public class ThreeDimensionRadar {
 
     public ThreeDimensionRadar() {
         radarData = new RadarData();
+        competitorEvaluation = new CompetitorEvaluation();
+        trafficEvaluation = new TrafficEvaluation();
+        cooperatorEvaluation = new CooperatorEvaluation();
     }
 
     @Setter

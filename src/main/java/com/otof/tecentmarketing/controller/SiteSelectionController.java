@@ -1,6 +1,7 @@
 package com.otof.tecentmarketing.controller;
 
 import com.otof.tecentmarketing.entity.GeoCodeResponseEntity;
+import com.otof.tecentmarketing.entity.display.ThreeDimensionRadar;
 import com.otof.tecentmarketing.services.HandleMapService;
 import com.otof.tecentmarketing.services.SiteSelectionStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ public class SiteSelectionController {
     }
 
     @GetMapping(path = "/site_selection")
-    public String getSiteSelectionPage() {
+    public String getSiteSelectionPage(Model model) {
+        model.addAttribute("radar_result", new ThreeDimensionRadar());
         return "site_selection/site_selection_index";
     }
 
