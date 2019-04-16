@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
         <meta charset="UTF-8"/>
         <title>Thymeleaf</title>
-
+    <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+        <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css"/>
         <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="../static/semantic/out/semantic.js" th:src="@{/semantic/out/semantic.js}"></script>
 
         <link rel="stylesheet" href="../static/css/site_selection.css" th:href="@{/css/site_selection.css}"/>
         <link rel="stylesheet" type="text/css" href="../static/semantic/out/semantic.css" th:href="@{/semantic/out/semantic.css}" />
-        <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=e70e70fc0c617d13aa771071fa154138"></script>
-
-        </head>
+    </head>
     <body>
         <div class="ui container">
             <div class="ui large icon input">
-                <input name="searchAddress" type="text" placeholder="请输入您的位置">
+                <input id="tipinput" name="searchAddress" type="text" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'>
                 <i class="link search icon"  onclick="$(this).getEvaluationRadarResult()"></i>
             </div>
         </div>
@@ -43,14 +42,11 @@
         </div>
 
     </body>
-        <script th:inline="javascript">
-            window.onload = function () {
-                var map = new AMap.Map('auto_navi_map');
-            }
-        </script>
-        <script rel="script" th:src="@{/js/site_selection.js}"></script>
 
-        <script th:inline="javascript">
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=e70e70fc0c617d13aa771071fa154138&"></script>
+    <script rel="script" th:src="@{/js/site_selection.js}"></script>
+
+    <script th:inline="javascript">
         let reponseFromServer = [[${radar_result}]];
         if (reponseFromServer != null) {
             let radar_result = [reponseFromServer.radarData];
