@@ -11,7 +11,7 @@ $.fn.loadMap = function () {
 
 $(document).ready(function(){
     $('.menu .item').tab();
-    $.fn.searchPoiByname();
+    $.fn.searchPoiByName();
 });
 
 

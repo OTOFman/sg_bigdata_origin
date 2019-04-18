@@ -1,4 +1,4 @@
-$.fn.searchPoiByname = function() {
+$.fn.searchPoiByName = function() {
     var windowsArr = [];
     var marker = [];
     var map = new AMap.Map("auto_navi_map", {
