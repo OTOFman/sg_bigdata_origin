@@ -38,6 +38,6 @@ public class SiteSelectionController {
             return null;
         }
         model.addAttribute("radar_result", siteSelectionStatisticService.getThreeDimensionResult(geocodesEntityList.get(0).getLocation()));
-        return "site_selection/site_selection_index";
+        return "site_selection/fragments/tab_info :: table";
     }
 }

@@ -38,6 +38,7 @@ public class ThreeDimensionRadar {
             backgroundColor = Arrays.asList("rgba(255, 99, 132, 0.2)");
             borderColor = Arrays.asList("rgba(255, 99, 132, 1)");
             borderWidth = 1;
+            label = "雷达图结果";
         }
     }
 }

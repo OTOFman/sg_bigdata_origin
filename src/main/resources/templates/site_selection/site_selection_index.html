@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-        <meta charset="UTF-8"/>
-        <title>Thymeleaf</title>
+    <meta charset="UTF-8"/>
+    <title>Thymeleaf</title>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
@@ -16,42 +16,83 @@
         <div class="ui container">
             <div class="ui large icon input">
                 <input id="tipinput" name="searchAddress" type="text" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'>
-                <i class="link search icon"  onclick="$(this).getEvaluationRadarResult()"></i>
+                <i class="link search icon"  onclick="getEvaluationRadarResult(document.getElementById('tipinput').value)"></i>
             </div>
         </div>
         <div class="picture-content ui container">
             <div class="ui stackable equal width grid">
                 <div th:insert="site_selection/fragments/auto_navi_map :: map" class="ten wide column"></div>
                 <div class="six wide column">
-                    <canvas id="siteSelectionResult"></canvas>
+                    <div th:replace="site_selection/fragments/radar_chart :: radar"></div>
                 </div>
             </div>
         </div>
-        <div class="evaluation-content ui container">
-            <div class="ui top attached tabular menu">
-                <a class="item active" data-tab="first">交通状况</a>
-                <a class="item" data-tab="second">竞业状况</a>
-                <a class="item" data-tab="third">异业状况</a>
-            </div>
-            <div th:insert="site_selection/fragments/tab_info :: traffic (trafficEvaluation=${radar_result.trafficEvaluation})" class="ui bottom attached tab segment active" data-tab="first">
-            </div>
-            <div th:insert="site_selection/fragments/tab_info :: competition (competitorEvaluation=${radar_result.competitorEvaluation})" class="ui bottom attached tab segment" data-tab="second">
-            </div>
-            <div th:insert="site_selection/fragments/tab_info :: coorperation (cooperatorEvaluation=${radar_result.cooperatorEvaluation})" class="ui bottom attached tab segment" data-tab="third">
-            </div>
-        </div>
+        <div id="tab_info" class="evaluation-content ui container" th:include="site_selection/fragments/tab_info :: table (radar_result=${radar_result})"></div>
 
     </body>
 
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=e70e70fc0c617d13aa771071fa154138&"></script>
-    <script rel="script" th:src="@{/js/site_selection.js}"></script>
 
     <script th:inline="javascript">
-        let reponseFromServer = [[${radar_result}]];
-        if (reponseFromServer != null) {
-            let radar_result = [reponseFromServer.radarData];
-            $(this).drawRadar(radar_result);
-        }
+        getEvaluationRadarResult = function(searchAddress) {
+            $.ajax({
+                url: "/site_selection_radar",
+                type: 'get',
+                contentType: 'application/json',
+                data: {instituteName : searchAddress},
+                async: true,
+                success: function(data){
+                    $("#tab_info").html(data);
+                    console.log([reponseFromServer.radarData]);
+                    radar_result = [reponseFromServer.radarData];
+                    drawRadar(radar_result);
+                },
+                error: function (data) {
+                    console.log('error: ' + data);
+                }
+            });
+        };
+
+        drawRadar = function (radar_result) {
+            var ctx = document.getElementById('siteSelectionResult');
+            var myChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['交通', '异业', '竞业'],
+                    datasets: radar_result
+                },
+                options: {
+                }
+            });
+        };
+
+        searchPoiByname = function() {
+            var windowsArr = [];
+            var marker = [];
+            var map = new AMap.Map("auto_navi_map", {
+                resizeEnable: true,
+                center: [116.397428, 39.90923],//地图中心点
+                keyboardEnable: false
+            });
+            AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+                var autoOptions = {
+                    city: "武汉", //城市，默认全国
+                    input: "tipinput"//使用联想输入的input的id
+                };
+                autocomplete= new AMap.Autocomplete(autoOptions);
+                var placeSearch = new AMap.PlaceSearch({
+                    city:'武汉',
+                    map:map
+                })
+                AMap.event.addListener(autocomplete, "select", function(e){
+                    placeSearch.setCity(e.poi.adcode);
+                    placeSearch.search(e.poi.name);
+                    getEvaluationRadarResult(e.poi.name);
+                });
+            });
+        };
+
     </script>
+    <script rel="script" th:src="@{/js/site_selection.js}"></script>
 </html>
 
