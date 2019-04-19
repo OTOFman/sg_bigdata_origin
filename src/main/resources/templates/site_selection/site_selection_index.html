@@ -58,13 +58,22 @@
         drawRadar = function (radar_result) {
             var ctx = document.getElementById('siteSelectionResult');
             var myChart = new Chart(ctx, {
-                type: 'radar',
+                type: 'bar',
                 data: {
                     labels: ['交通', '异业', '竞业'],
                     datasets: radar_result
                 },
                 options: {
-                    responsive: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    // aspectRatio: 2,
                     legend: {
                         display: false,
                     },
@@ -72,9 +81,12 @@
                         display: true,
                         text: '选址智能分析'
                     },
-                    scale: {
-                        ticks: {
-                            beginAtZero: true
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
                         }
                     }
                 }
