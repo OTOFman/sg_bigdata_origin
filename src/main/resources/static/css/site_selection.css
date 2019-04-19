@@ -1,11 +1,8 @@
-#siteSelectionResult {
-    width: 100%;
-    height: 100%;
-}
-
 #auto_navi_map {
     width: 100%;
     height: 100%;
+    border: orange solid 1px;
+    border-radius: 9%;
 }
 
 #panel {
@@ -30,4 +27,9 @@
 .evaluation-content.ui.container {
     height: 30%;
     margin: 1rem 0;
+}
+
+.six.wide.column + div {
+    width: 100%;
+    height: 100%;
 }

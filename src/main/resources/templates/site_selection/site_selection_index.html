@@ -3,8 +3,8 @@
     <meta charset="UTF-8"/>
     <title>Thymeleaf</title>
     <head>
-<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />-->
-<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
         <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css"/>
         <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="../static/semantic/out/semantic.js" th:src="@{/semantic/out/semantic.js}"></script>
@@ -64,6 +64,19 @@
                     datasets: radar_result
                 },
                 options: {
+                    responsive: false,
+                    legend: {
+                        display: false,
+                    },
+                    title: {
+                        display: true,
+                        text: '选址智能分析'
+                    },
+                    scale: {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
                 }
             });
         };

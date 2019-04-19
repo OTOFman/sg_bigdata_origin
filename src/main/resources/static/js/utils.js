@@ -67,7 +67,7 @@ $.fn.renderPoiByType = function (type, city, radius) {
     geocoder.setCity("全国");
     geocoder.getLocation(address, function(status, result) {
         if (status === 'complete'&&result.geocodes.length) {
-            geocode = result.geocodes[0].location
+            geocode = result.geocodes[0].location;
             $.fn.searchPoiByType(type, city, radius, geocode);
         }else {
             alert(JSON.stringify(result))

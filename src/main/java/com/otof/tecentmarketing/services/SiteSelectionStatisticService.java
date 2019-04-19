@@ -49,7 +49,6 @@ public class SiteSelectionStatisticService {
         dataList.add(trafficEvaluation.getEvaluation());
 
         threeDimensionRadar.getRadarData().setData(dataList);
-        threeDimensionRadar.getRadarData().setLabel("交通-竞业-异业评估");
         threeDimensionRadar.setCompetitorEvaluation(competitorEvaluation);
         threeDimensionRadar.setCooperatorEvaluation(cooperatorEvaluation);
         threeDimensionRadar.setTrafficEvaluation(trafficEvaluation);

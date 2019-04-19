@@ -28,17 +28,19 @@ public class ThreeDimensionRadar {
     @Setter
     @Getter
     public class RadarData {
-        private String label;
         private List<Integer> data;
         private List<String> backgroundColor;
         private List<String> borderColor;
         private int borderWidth;
+        private String pointStyle;
+        private List<String> pointBackgroundColor;
 
         public RadarData() {
             backgroundColor = Arrays.asList("rgba(255, 99, 132, 0.2)");
             borderColor = Arrays.asList("rgba(255, 99, 132, 1)");
-            borderWidth = 1;
-            label = "雷达图结果";
+            borderWidth = 2;
+            pointStyle = "star";
+            pointBackgroundColor = Arrays.asList("rgba(54, 162, 235, 1)");
         }
     }
 }
