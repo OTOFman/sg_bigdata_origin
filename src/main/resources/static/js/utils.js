@@ -61,6 +61,7 @@ $.fn.renderPoiByType = function (type, city, radius) {
     var geocoder = new AMap.Geocoder({
         city: "全国"
     });
+    map.clearMap();
     var geocode = "";
     var address  = document.getElementById('tipinput').value;
     geocoder.setCity("全国");
