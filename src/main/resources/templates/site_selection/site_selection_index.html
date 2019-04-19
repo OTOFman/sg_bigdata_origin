@@ -19,14 +19,14 @@
         <div class="ui container">
             <div class="ui large icon input">
                 <input id="tipinput" name="searchAddress" type="text" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'>
-                <i class="link search icon"  onclick="getEvaluationRadarResult(document.getElementById('tipinput').value)"></i>
+                <i class="link search icon"  onclick="getEvaluationBarResult(document.getElementById('tipinput').value)"></i>
             </div>
         </div>
         <div class="picture-content ui container">
             <div class="ui stackable equal width grid">
                 <div th:insert="site_selection/fragments/auto_navi_map :: map" class="ten wide column"></div>
                 <div class="six wide column">
-                    <div th:replace="site_selection/fragments/radar_chart :: radar"></div>
+                    <div th:replace="site_selection/fragments/bar_chart :: bar"></div>
                 </div>
             </div>
         </div>
@@ -36,18 +36,18 @@
 
 
     <script th:inline="javascript">
-        getEvaluationRadarResult = function(searchAddress) {
+        getEvaluationBarResult = function(searchAddress) {
             $.ajax({
-                url: "/site_selection_radar",
+                url: "/site_selection_bar",
                 type: 'get',
                 contentType: 'application/json',
                 data: {instituteName : searchAddress},
                 async: true,
                 success: function(data){
                     $("#tab_info").html(data);
-                    console.log([reponseFromServer.radarData]);
-                    radar_result = [reponseFromServer.radarData];
-                    drawRadar(radar_result);
+                    console.log([reponseFromServer.barData]);
+                    bar_result = [reponseFromServer.barData];
+                    drawBar(bar_result);
                 },
                 error: function (data) {
                     console.log('error: ' + data);
@@ -55,13 +55,13 @@
             });
         };
 
-        drawRadar = function (radar_result) {
+        drawBar = function (bar_result) {
             var ctx = document.getElementById('siteSelectionResult');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ['交通', '异业', '竞业'],
-                    datasets: radar_result
+                    datasets: bar_result
                 },
                 options: {
                     scales: {

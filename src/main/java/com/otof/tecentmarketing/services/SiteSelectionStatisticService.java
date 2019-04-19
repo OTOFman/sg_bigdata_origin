@@ -1,7 +1,7 @@
 package com.otof.tecentmarketing.services;
 
 import com.otof.tecentmarketing.entity.SiteSelectionResultEntity;
-import com.otof.tecentmarketing.entity.display.ThreeDimensionRadar;
+import com.otof.tecentmarketing.entity.display.ThreeDimensionBar;
 import com.otof.tecentmarketing.entity.evaluation.CompetitorEvaluation;
 import com.otof.tecentmarketing.entity.evaluation.CooperatorEvaluation;
 import com.otof.tecentmarketing.entity.evaluation.TrafficEvaluation;
@@ -37,8 +37,8 @@ public class SiteSelectionStatisticService {
         return siteSelectionResultEntity;
     }
 
-    public ThreeDimensionRadar getThreeDimensionResult(String location) throws URISyntaxException, InterruptedException {
-        ThreeDimensionRadar threeDimensionRadar = new ThreeDimensionRadar();
+    public ThreeDimensionBar getThreeDimensionResult(String location) throws URISyntaxException, InterruptedException {
+        ThreeDimensionBar threeDimensionBar = new ThreeDimensionBar();
         List<Integer> dataList = new ArrayList<>();
         CompetitorEvaluation competitorEvaluation = competitorStatisticService.getCompetitorEvaluation(location);
         CooperatorEvaluation cooperatorEvaluation = cooperatorStatisticService.getCooperatorEvaluation(location);
@@ -48,10 +48,10 @@ public class SiteSelectionStatisticService {
         dataList.add(cooperatorEvaluation.getEvaluation());
         dataList.add(trafficEvaluation.getEvaluation());
 
-        threeDimensionRadar.getRadarData().setData(dataList);
-        threeDimensionRadar.setCompetitorEvaluation(competitorEvaluation);
-        threeDimensionRadar.setCooperatorEvaluation(cooperatorEvaluation);
-        threeDimensionRadar.setTrafficEvaluation(trafficEvaluation);
-        return threeDimensionRadar;
+        threeDimensionBar.getBarData().setData(dataList);
+        threeDimensionBar.setCompetitorEvaluation(competitorEvaluation);
+        threeDimensionBar.setCooperatorEvaluation(cooperatorEvaluation);
+        threeDimensionBar.setTrafficEvaluation(trafficEvaluation);
+        return threeDimensionBar;
     }
 }

@@ -11,15 +11,15 @@ import java.util.List;
 
 @Setter
 @Getter
-public class ThreeDimensionRadar {
+public class ThreeDimensionBar {
 
-    private RadarData radarData;
+    private BarData barData;
     private CompetitorEvaluation competitorEvaluation;
     private TrafficEvaluation trafficEvaluation;
     private CooperatorEvaluation cooperatorEvaluation;
 
-    public ThreeDimensionRadar() {
-        radarData = new RadarData();
+    public ThreeDimensionBar() {
+        barData = new BarData();
         competitorEvaluation = new CompetitorEvaluation();
         trafficEvaluation = new TrafficEvaluation();
         cooperatorEvaluation = new CooperatorEvaluation();
@@ -27,13 +27,13 @@ public class ThreeDimensionRadar {
 
     @Setter
     @Getter
-    public class RadarData {
+    public class BarData {
         private List<Integer> data;
         private List<String> backgroundColor;
         private List<String> borderColor;
         private int borderWidth;
 
-        public RadarData() {
+        public BarData() {
             backgroundColor = Arrays.asList("rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)", "rgba(75, 192, 192, 0.2)");
             borderColor = Arrays.asList("rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)", "rgba(75, 192, 192, 0.2)");
             borderWidth = 1;

@@ -1,7 +1,7 @@
 package com.otof.tecentmarketing.controller;
 
 import com.otof.tecentmarketing.entity.GeoCodeResponseEntity;
-import com.otof.tecentmarketing.entity.display.ThreeDimensionRadar;
+import com.otof.tecentmarketing.entity.display.ThreeDimensionBar;
 import com.otof.tecentmarketing.services.HandleMapService;
 import com.otof.tecentmarketing.services.SiteSelectionStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +27,17 @@ public class SiteSelectionController {
 
     @GetMapping(path = "/site_selection")
     public String getSiteSelectionPage(Model model) {
-        model.addAttribute("radar_result", new ThreeDimensionRadar());
+        model.addAttribute("bar_result", new ThreeDimensionBar());
         return "site_selection/site_selection_index";
     }
 
-    @GetMapping(path = "/site_selection_radar")
-    public String getSiteSelectionRadar(@RequestParam String instituteName, Model model) throws URISyntaxException, InterruptedException {
+    @GetMapping(path = "/site_selection_bar")
+    public String getSiteSelectionBar(@RequestParam String instituteName, Model model) throws URISyntaxException, InterruptedException {
         List<GeoCodeResponseEntity.GeocodesEntity> geocodesEntityList = handleMapService.getGeoCodeByName(instituteName, "武汉").getBody().getGeocodes();
         if (geocodesEntityList.isEmpty()) {
             return null;
         }
-        model.addAttribute("radar_result", siteSelectionStatisticService.getThreeDimensionResult(geocodesEntityList.get(0).getLocation()));
+        model.addAttribute("bar_result", siteSelectionStatisticService.getThreeDimensionResult(geocodesEntityList.get(0).getLocation()));
         return "site_selection/fragments/tab_info :: table";
     }
 }
