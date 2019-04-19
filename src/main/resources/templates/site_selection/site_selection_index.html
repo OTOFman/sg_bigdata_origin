@@ -3,11 +3,13 @@
     <meta charset="UTF-8"/>
     <title>Thymeleaf</title>
     <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />-->
+<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>-->
         <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css"/>
         <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="../static/semantic/out/semantic.js" th:src="@{/semantic/out/semantic.js}"></script>
+        <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=e70e70fc0c617d13aa771071fa154138&&plugin=AMap.Geocoder"></script>
+
         <script rel="script" th:src="@{/js/utils.js}"></script>
 
         <link rel="stylesheet" href="../static/css/site_selection.css" th:href="@{/css/site_selection.css}"/>
@@ -32,7 +34,6 @@
 
     </body>
 
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=e70e70fc0c617d13aa771071fa154138&"></script>
 
     <script th:inline="javascript">
         getEvaluationRadarResult = function(searchAddress) {
