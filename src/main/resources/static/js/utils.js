@@ -70,7 +70,7 @@ $.fn.renderPoiByType = function (type, city, radius) {
             geocode = result.geocodes[0].location;
             $.fn.searchPoiByType(type, city, radius, geocode);
         }else {
-            alert(JSON.stringify(result))
+            alert("无法加载兴趣点");
         }
     });
 };
