@@ -70,10 +70,12 @@ canvas {
     background-color: #E4EEF4;
 }
 
-.ten.wide.column div:first-child {
+.map-style {
     background: white;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px;
     border-radius: 4px;
+    height: 100%;
+    width: 100%;
 }
 
 .six.wide.column {
