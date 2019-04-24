@@ -1,7 +1,7 @@
 #siteSelectionResult {
     height: 100%;
     background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 5px;
     border-radius: 4px;
 }
 
@@ -45,6 +45,7 @@ body {
 .evaluation-content.ui.container {
     height: 30%;
     margin: 1rem 0;
+    padding: 0 1rem;
 }
 
 .six.wide.column+div {
@@ -72,7 +73,7 @@ canvas {
 
 .map-style {
     background: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 5px;
     border-radius: 4px;
     height: 100%;
     width: 100%;
@@ -80,4 +81,9 @@ canvas {
 
 .six.wide.column {
     background-color: #E4EEF4;
+}
+
+.ui.bottom.attached.tab.segment.active {
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 5px;
+    border-radius: 4px;
 }
