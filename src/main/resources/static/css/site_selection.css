@@ -1,12 +1,13 @@
 #siteSelectionResult {
     height: 100%;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px;
+    border-radius: 4px;
 }
 
 #auto_navi_map {
     width: 100%;
     height: 100%;
-    border: orange solid 1px;
-    border-radius: 9%;
 }
 
 #panel {
@@ -19,9 +20,20 @@
     width: 280px;
 }
 
+#tipinput {
+    box-shadow: 0 0 5px rgba(0,0,0,.1);
+    margin: 1rem 1rem;
+    width: 24rem;
+}
+
+body {
+    background-color: #E4EEF4 !important;
+}
+
 .picture-content.ui.container {
     height: 50%;
     margin: 1rem 0;
+    padding: 0 1rem;
 }
 
 .ui.container .grid {
@@ -38,6 +50,10 @@
     height: 100%;
 }
 
+.ui.icon.input > i.link.search.icon {
+    right: 1rem;
+}
+
 canvas {
     height: 100%;
     width: 100%;
@@ -45,4 +61,13 @@ canvas {
 
 .bar-section {
     height: 100%;
+}
+
+.ten.wide.column {
+    padding-right: 1rem;
+    background-color: #E4EEF4;
+}
+
+.six.wide.column {
+    background-color: #E4EEF4;
 }
