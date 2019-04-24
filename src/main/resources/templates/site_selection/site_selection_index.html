@@ -24,7 +24,9 @@
         </div>
         <div class="picture-content ui container">
             <div class="ui stackable equal width grid">
-                <div th:insert="site_selection/fragments/auto_navi_map :: map" class="ten wide column"></div>
+                <div class="ten wide column">
+                    <div th:replace="site_selection/fragments/auto_navi_map :: map"></div>
+                </div>
                 <div class="six wide column">
                     <div th:replace="site_selection/fragments/bar_chart :: bar"></div>
                 </div>
