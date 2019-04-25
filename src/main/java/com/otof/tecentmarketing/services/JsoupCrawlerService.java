@@ -33,7 +33,7 @@ public class JsoupCrawlerService {
             try {
                 Document document = Jsoup.connect(v).get();
 
-                String buildYear = document.select("li:contains(建筑年代)").size() != 0 ? document.select("li:contains(建筑年代)").get(0).text().replaceAll("[^\\d]+", "") : "";
+                String buildYear = document.select("li:contains(建筑年代)").size() != 0 ? document.select("li:contains(建筑年代)").get(0).text().replaceAll("[^\\d]+", "").substring(0, 4) : "";
                 String apartmentAmount = document.select("li:contains(房屋总数)").size() != 0 ? document.select("li:contains(房屋总数)").get(0).text().replaceAll("[^\\d]+", "") : "";
                 String buildingAmount = document.select("li:contains(楼栋总数)").size() != 0 ? document.select("li:contains(楼栋总数)").get(0).text().replaceAll("[^\\d]+", "") : "";
 
@@ -64,6 +64,7 @@ public class JsoupCrawlerService {
             communities.clear();
             parsedCommunityNumber = 0;
         }
+        logger.info("Finish store data to DB!");
     }
 
     private void storeDataToDB() {
