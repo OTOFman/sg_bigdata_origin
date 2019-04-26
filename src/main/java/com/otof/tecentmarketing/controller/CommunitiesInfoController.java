@@ -1,9 +1,9 @@
 package com.otof.tecentmarketing.controller;
 
 import com.otof.tecentmarketing.entity.CommunityInfoEntity;
-import com.otof.tecentmarketing.entity.CommunityStatisticEntity;
+import com.otof.tecentmarketing.entity.evaluation.CommunityEvaluation;
 import com.otof.tecentmarketing.entity.GeoCodeResponseEntity;
-import com.otof.tecentmarketing.services.CommunityInfoService;
+import com.otof.tecentmarketing.services.CommunityStatisticService;
 import com.otof.tecentmarketing.services.HandleMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,22 +27,25 @@ public class CommunitiesInfoController {
     @Autowired
     private HandleMapService handleMapService;
     @Autowired
-    private CommunityInfoService communityInfoService;
+    private CommunityStatisticService communityStatisticService;
 
     @GetMapping(produces = "application/json")
-    public Set<CommunityInfoEntity> getCommunitiesInfo(@NotNull @NotBlank @RequestParam String city,
+    public CommunityEvaluation getCommunitiesInfo(@NotNull @NotBlank @RequestParam String city,
                                                        @NotNull @NotBlank @RequestParam String name) throws URISyntaxException, InterruptedException {
 
         ResponseEntity<GeoCodeResponseEntity> geoCodeEntity = handleMapService.getGeoCodeByName(name,city);
-        String location = geoCodeEntity.getBody().getGeocodes().get(0).getLocation();
-        return communityInfoService.getCommunityInfos(location, RADIUS, APARTMENTTYPE);
+        if (geoCodeEntity.getBody().getGeocodes().size() != 0) {
+            String location = geoCodeEntity.getBody().getGeocodes().get(0).getLocation();
+            return communityStatisticService.getCommunityInfos(location, RADIUS, APARTMENTTYPE);
+        }
+        return null;
     }
 
     @GetMapping(path = "/statistics")
-    public CommunityStatisticEntity getCommunityStatistic(@NotNull @NotBlank @RequestParam String city,
-                                                        @NotNull @NotBlank @RequestParam String name) throws URISyntaxException, InterruptedException {
+    public CommunityEvaluation getCommunityStatistic(@NotNull @NotBlank @RequestParam String city,
+                                                     @NotNull @NotBlank @RequestParam String name) throws URISyntaxException, InterruptedException {
         ResponseEntity<GeoCodeResponseEntity> geoCodeEntity = handleMapService.getGeoCodeByName(name,city);
         String location = geoCodeEntity.getBody().getGeocodes().get(0).getLocation();
-        return communityInfoService.getCommunityStatistic(location, RADIUS, APARTMENTTYPE);
+        return communityStatisticService.getCommunityStatistic(location, RADIUS, APARTMENTTYPE);
     }
 }

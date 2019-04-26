@@ -1,7 +1,7 @@
 package com.otof.tecentmarketing.mapper;
 
 import com.otof.tecentmarketing.entity.CommunityInfoEntity;
-import com.otof.tecentmarketing.entity.CommunityStatisticEntity;
+import com.otof.tecentmarketing.entity.evaluation.CommunityEvaluation;
 import org.apache.ibatis.annotations.*;
 
 import java.text.MessageFormat;
@@ -15,13 +15,15 @@ public interface CommunityInfoMapper {
     @InsertProvider(type = Provider.class, method = "batchInsert")
     int batchInsertCommunityInfo(List<CommunityInfoEntity> communities);
 
-    @Select("select sum(c.building_amount)  building_amount, avg(c.price) avg_price, sum(c.apartment_amount) apartment_amount from tempcommunitiesname t, communityinfo c where c.community_name like '%' || t.name ||'%'")
+    @Select("select sum(c.building_amount)  building_amount, avg(c.price) avg_price, sum(c.apartment_amount) apartment_amount, avg(c.build_year) avg_build_year " +
+            "from tempcommunitiesname t, communityinfo c where c.community_name like '%' || t.name ||'%'")
     @Results({
             @Result(property = "buildingAmount", column = "building_amount"),
             @Result(property = "apartmentAmount", column = "apartment_amount"),
-            @Result(property = "avgPrice", column = "avg_price")
+            @Result(property = "avgPrice", column = "avg_price"),
+            @Result(property = "avgBuildYear", column = "avg_build_year")
     })
-    CommunityStatisticEntity getCommunityStatisticByNameList();
+    CommunityEvaluation getCommunityStatisticByNameList();
 
     @Select("select c.* from tempcommunitiesname t, communityinfo c where c.community_name like '%' || t.name ||'%'")
     @Results({

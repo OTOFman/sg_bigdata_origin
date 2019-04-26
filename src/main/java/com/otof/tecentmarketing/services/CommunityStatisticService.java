@@ -1,8 +1,9 @@
 package com.otof.tecentmarketing.services;
 
+import com.otof.tecentmarketing.rules.CommunityStatisticRules;
 import com.otof.tecentmarketing.task.CallCommunitiesInfoTask;
 import com.otof.tecentmarketing.entity.CommunityInfoEntity;
-import com.otof.tecentmarketing.entity.CommunityStatisticEntity;
+import com.otof.tecentmarketing.entity.evaluation.CommunityEvaluation;
 import com.otof.tecentmarketing.entity.PoiResponseEntity;
 import com.otof.tecentmarketing.mapper.CommunityInfoMapper;
 import com.otof.tecentmarketing.mapper.TempTableMapper;
@@ -18,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 @Service
-public class CommunityInfoService {
+public class CommunityStatisticService {
 
     private static final int SLEEPTIME = 1000;
     private static final double PAGEOFFSET = 20.00;
@@ -31,17 +32,19 @@ public class CommunityInfoService {
     private TempTableMapper tempTableMapper;
     @Autowired
     private CallCommunitiesInfoTask callCommunitiesInfoTask;
+    @Autowired
+    private CommunityStatisticRules communityStatisticRules;
     private List<String> communityNameList;
 
-    public CommunityInfoService() {
+    public CommunityStatisticService() {
     }
 
-    public Set<CommunityInfoEntity> getCommunityInfos(String location, String radius, String types) throws URISyntaxException, InterruptedException {
+    public CommunityEvaluation getCommunityInfos(String location, String radius, String types) throws URISyntaxException, InterruptedException {
         createTempCommunitiesNameTable(location, radius, types);
-        return communityInfoMapper.getCommunitiesInfoByNameList();
+        return communityStatisticRules.analysisCommunities(communityInfoMapper.getCommunitiesInfoByNameList());
     }
 
-    public CommunityStatisticEntity getCommunityStatistic(String location, String radius, String types) throws URISyntaxException, InterruptedException {
+    public CommunityEvaluation getCommunityStatistic(String location, String radius, String types) throws URISyntaxException, InterruptedException {
         createTempCommunitiesNameTable(location, radius, types);
         return communityInfoMapper.getCommunityStatisticByNameList();
     }
