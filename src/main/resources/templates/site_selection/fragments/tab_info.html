@@ -6,6 +6,7 @@
             <a class="item active" data-tab="first">交通状况</a>
             <a class="item" data-tab="second">竞业状况</a>
             <a class="item" data-tab="third">异业状况</a>
+            <a class="item" data-tab="forth">周围社区</a>
         </div>
         <div class="ui bottom attached tab segment active" data-tab="first">
             <p>交通评估根据目标地周边<span>1000m</span>内交通状况分析得出，从轨道交通、公共交通及私家车停车场等多个维度出发进行分析</p>
@@ -62,6 +63,28 @@
                 <tr>
                     <td th:text="${bar_result.cooperatorEvaluation.evaluation}"></td>
                     <td th:text="${bar_result.cooperatorEvaluation.cooperatorAmount}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="ui bottom attached tab segment" data-tab="forth">
+            <p>社区状况根据目标地周边3000m内商品住宅进行统计</p>
+            <table class="ui inverted orange table">
+                <thead>
+                <tr>
+                    <th>社区评估</th>
+                    <th>居民户数</th>
+                    <th>平均房价</th>
+                    <th>平均修建年份</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${bar_result.communityEvaluation.evaluation}"></td>
+                    <td th:text="${bar_result.communityEvaluation.apartmentAmount}"></td>
+                    <td th:text="${bar_result.communityEvaluation.avgPrice}"></td>
+                    <td th:text="${bar_result.communityEvaluation.avgBuildYear}"></td>
                 </tr>
                 </tbody>
             </table>

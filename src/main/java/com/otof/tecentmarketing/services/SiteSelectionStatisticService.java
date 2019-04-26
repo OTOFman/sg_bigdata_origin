@@ -2,6 +2,7 @@ package com.otof.tecentmarketing.services;
 
 import com.otof.tecentmarketing.entity.SiteSelectionResultEntity;
 import com.otof.tecentmarketing.entity.display.ThreeDimensionBar;
+import com.otof.tecentmarketing.entity.evaluation.CommunityEvaluation;
 import com.otof.tecentmarketing.entity.evaluation.CompetitorEvaluation;
 import com.otof.tecentmarketing.entity.evaluation.CooperatorEvaluation;
 import com.otof.tecentmarketing.entity.evaluation.TrafficEvaluation;
@@ -27,6 +28,8 @@ public class SiteSelectionStatisticService {
     CooperatorStatisticService cooperatorStatisticService;
     @Autowired
     TrafficStatisticService trafficStatisticService;
+    @Autowired
+    CommunityStatisticService communityStatisticService;
 
     public SiteSelectionResultEntity getSiteSelectionResult(String location) throws URISyntaxException, InterruptedException {
         SiteSelectionResultEntity siteSelectionResultEntity = new SiteSelectionResultEntity();
@@ -43,15 +46,19 @@ public class SiteSelectionStatisticService {
         CompetitorEvaluation competitorEvaluation = competitorStatisticService.getCompetitorEvaluation(location);
         CooperatorEvaluation cooperatorEvaluation = cooperatorStatisticService.getCooperatorEvaluation(location);
         TrafficEvaluation trafficEvaluation = trafficStatisticService.getTrafficEvaluation(location);
+        CommunityEvaluation communityEvaluation = communityStatisticService.getCommunityInfos(location, "3000", "120000");
+
 
         dataList.add(competitorEvaluation.getEvaluation());
         dataList.add(cooperatorEvaluation.getEvaluation());
         dataList.add(trafficEvaluation.getEvaluation());
+        dataList.add(communityEvaluation.getEvaluation());
 
         threeDimensionBar.getBarData().setData(dataList);
         threeDimensionBar.setCompetitorEvaluation(competitorEvaluation);
         threeDimensionBar.setCooperatorEvaluation(cooperatorEvaluation);
         threeDimensionBar.setTrafficEvaluation(trafficEvaluation);
+        threeDimensionBar.setCommunityEvaluation(communityEvaluation);
         return threeDimensionBar;
     }
 }
