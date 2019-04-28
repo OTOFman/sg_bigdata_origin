@@ -1,5 +1,58 @@
-
 let bar_result = {};
+
+let mainData = new Array();
+let secondaryData = new Array();
+var mainDataset = {
+    label: '',
+    data: [],
+    backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(198, 78, 64, 0.2)',
+        'rgba(200, 200, 200, 0.2)',
+        'rgba(211, 78, 8, 0.2)'
+    ],
+    borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(198, 78, 64, 0.2)',
+        'rgba(200, 200, 200, 0.2)',
+        'rgba(211, 78, 8, 0.2)'
+    ],
+    borderWidth: 1
+};
+var secondaryDataset = {
+    label: '',
+    data: [],
+    backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(198, 78, 64, 0.2)',
+        'rgba(200, 200, 200, 0.2)',
+        'rgba(211, 78, 8, 0.2)'
+    ],
+    borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(198, 78, 64, 0.2)',
+        'rgba(200, 200, 200, 0.2)',
+        'rgba(211, 78, 8, 0.2)'
+    ],
+    borderWidth: 1
+};
+
 
 $.fn.loadMap = function () {
     var url = 'https://webapi.amap.com/maps?v=1.4.14&key=e70e70fc0c617d13aa771071fa154138&callback=onLoad';
@@ -12,7 +65,7 @@ $.fn.loadMap = function () {
 $(document).ready(function(){
     $('.menu .item').tab();
     $.fn.searchPoiByName();
-    compareSite();
+    //compareSite();
 });
 
 
@@ -51,6 +104,58 @@ $.fn.drawBar = function (bar_result) {
             }
         }
     });
+};
+
+$.fn.createCompareSite = function (address, responseFromServer) {
+    let percentMainData = new Array();
+    let percentSecondaryData = new Array();
+    let compareDataSets = [];
+    if (mainData.length === 0) {
+        let flag = 1;
+        mainData = $.fn.getDataFromResponse(responseFromServer, flag);
+        mainDataset.label = address;
+        mainDataset.data = [1, 1, 1, 1, 1, 1, 1, 1, 1];
+        compareDataSets.push(mainDataset);
+    } else {
+        secondaryDataset.label = address;
+        let flag = -1;
+        secondaryData = $.fn.getDataFromResponse(responseFromServer, flag);
+        let showData = $.fn.getCompareBarShowData(mainData, secondaryData);
+        percentSecondaryData = showData.secondaryDataArray;
+        percentMainData = showData.mainDataArray;
+        mainDataset.data = percentMainData;
+        secondaryDataset.data = percentSecondaryData;
+        compareDataSets.push(mainDataset);
+        compareDataSets.push(secondaryDataset);
+    }
+    return compareDataSets;
+};
+
+$.fn.getDataFromResponse = function(responseFromServer, flag) {
+    let data = new Array();
+    data.push(flag * responseFromServer.trafficEvaluation.metroAmount);
+    data.push(flag * responseFromServer.trafficEvaluation.busStationAmount);
+    data.push(flag * responseFromServer.trafficEvaluation.parkingAmount);
+    data.push(flag * responseFromServer.competitorEvaluation.competitorAmount);
+    data.push(flag * responseFromServer.competitorEvaluation.starCompetitorAmount);
+    data.push(flag * responseFromServer.cooperatorEvaluation.cooperatorAmount);
+    data.push(flag * responseFromServer.communityEvaluation.apartmentAmount);
+    data.push(flag * responseFromServer.communityEvaluation.avgPrice);
+    data.push(flag * responseFromServer.communityEvaluation.avgBuildYear);
+    return data;
+};
+
+$.fn.getCompareBarShowData = function (mainDataArray, secondaryDataArray) {
+    let showData = {
+        mainDataArray: [],
+        secondaryDataArray: []
+    };
+    for (let i=0; i<mainDataArray.length; i++) {
+        let sumOfItems = mainDataArray[i]+secondaryDataArray[i];
+        showData.mainDataArray[i] = sumOfItems === 0 ? 0 : mainDataArray[i]/sumOfItems;
+        showData.secondaryDataArray[i] = sumOfItems === 0 ? 0 : secondaryDataArray[i]/sumOfItems;
+    }
+    return showData;
 };
 
 
