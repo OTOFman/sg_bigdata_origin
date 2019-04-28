@@ -39,10 +39,10 @@ public class PoisEntity {
     private String adname;
     private String shopinfo;
     private Object parent;
-    private List<?> biz_type;
-    private List<?> importance;
-    private List<?> shopid;
-    private List<?> poiweight;
+    private Object biz_type;
+    private Object importance;
+    private Object shopid;
+    private Object poiweight;
     private List<PhotosEntity> photos;
 
     public String getId() {
@@ -157,35 +157,35 @@ public class PoisEntity {
         this.parent = parent;
     }
 
-    public List<?> getBiz_type() {
+    public Object getBiz_type() {
         return biz_type;
     }
 
-    public void setBiz_type(List<?> biz_type) {
+    public void setBiz_type(Object biz_type) {
         this.biz_type = biz_type;
     }
 
-    public List<?> getImportance() {
+    public Object getImportance() {
         return importance;
     }
 
-    public void setImportance(List<?> importance) {
+    public void setImportance(Object importance) {
         this.importance = importance;
     }
 
-    public List<?> getShopid() {
+    public Object getShopid() {
         return shopid;
     }
 
-    public void setShopid(List<?> shopid) {
+    public void setShopid(Object shopid) {
         this.shopid = shopid;
     }
 
-    public List<?> getPoiweight() {
+    public Object getPoiweight() {
         return poiweight;
     }
 
-    public void setPoiweight(List<?> poiweight) {
+    public void setPoiweight(Object poiweight) {
         this.poiweight = poiweight;
     }
 
