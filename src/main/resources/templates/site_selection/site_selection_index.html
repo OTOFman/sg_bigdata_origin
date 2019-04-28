@@ -32,7 +32,16 @@
                 </div>
             </div>
         </div>
-        <div id="tab_info" class="evaluation-content ui container" th:include="site_selection/fragments/tab_info :: table"></div>
+        <div class="ui container">
+            <div class="ui stackable equal width grid">
+                <div class="ten wide column">
+                    <div id="tab_info" class="evaluation-content" th:include="site_selection/fragments/tab_info :: table"></div>
+                </div>
+                <div class="six wide column">
+                    <div id="compare_bar" th:include="site_selection/fragments/bar_chart :: compareBar"></div>
+                </div>
+            </div>
+        </div>
 
     </body>
 
@@ -49,7 +58,7 @@
                     $("#tab_info").html(data);
                     console.log([reponseFromServer.barData]);
                     bar_result = [reponseFromServer.barData];
-                    drawBar(bar_result);
+                    $.fn.drawBar(bar_result);
                 },
                 error: function (data) {
                     console.log('error: ' + data);
@@ -57,43 +66,78 @@
             });
         };
 
-        drawBar = function (bar_result) {
-            var ctx = document.getElementById('siteSelectionResult');
+
+        var hasSetMainSite = false;
+        compareSite = function () {
+            // if (!hasSetMainSite) {
+            //     hasSetMainSite = true;
+            // }
+            var ctx = document.getElementById('siteCompare');
+            ctx.height = (window.innerHeight*0.4);
             var myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'horizontalBar',
                 data: {
-                    labels: ['交通', '异业', '竞业', '社区'],
-                    datasets: bar_result
+                    labels: ['地铁轻轨', '公交车站', '停车场', '一线早教', '普通早教', '异业机构', '居民户数', '平均房价', '平均修建年份'],
+                    datasets: [{
+                        label: '武汉大学',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    },{
+                        label: '华中科技大学',
+                        data: [-12, -1, -3, -15, -22, -3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
                 },
                 options: {
                     scales: {
                         yAxes: [{
                             ticks: {
                                 beginAtZero: true
+                            },
+                            barPercentage: 0.5,
+                            barThickness: 12,
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                display: false
                             }
                         }]
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    // aspectRatio: 2,
-                    legend: {
-                        display: false,
-                    },
-                    title: {
-                        display: true,
-                        text: '选址智能分析'
-                    },
-                    layout: {
-                        padding: {
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0
-                        }
                     }
                 }
             });
-        };
+        }
 
     </script>
     <script rel="script" th:src="@{/js/site_selection.js}"></script>
