@@ -33,13 +33,13 @@ public class Application {
     @Autowired
     private GenerateMeituanSign generateMeituanSign;
 
-    @PostConstruct
-    public void startClawer() throws Exception {
-
-        new InitCrawlerService().startCrawl(new CrawlerFactory());
-        logger.info("Finish crawl information from home page!");
-        jsoupCrawlerService.getCommunityInfo();
-    }
+//    @PostConstruct
+//    public void startClawer() throws Exception {
+//
+//        new InitCrawlerService().startCrawl(new CrawlerFactory());
+//        logger.info("Finish crawl information from home page!");
+//        jsoupCrawlerService.getCommunityInfo();
+//    }
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
         SpringApplication springApplication = new SpringApplication(Application.class);
