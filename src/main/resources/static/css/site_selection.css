@@ -34,6 +34,10 @@
     border-radius: 4px;
 }
 
+#compareBarSection {
+    display: none;
+}
+
 body {
     background-color: #E4EEF4 !important;
 }
@@ -96,4 +100,9 @@ canvas {
 
 .table-content.ui.container {
     padding: 0 1rem;
+}
+
+.ui.checkbox.compare-check {
+    display: block;
+    margin: 0 1rem;
 }

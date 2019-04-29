@@ -17,9 +17,15 @@
     </head>
     <body>
         <div class="ui container">
-            <div class="ui large icon input">
-                <input id="tipinput" name="searchAddress" type="text" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'>
-                <i class="link search icon"  onclick="getEvaluationBarResult(document.getElementById('tipinput').value)"></i>
+            <div>
+                <div class="ui large icon input">
+                    <input id="tipinput" name="searchAddress" type="text" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'>
+                    <i class="link search icon"  onclick="getEvaluationBarResult(document.getElementById('tipinput').value)"></i>
+                </div>
+                <div class="ui checkbox compare-check">
+                    <input type="checkbox" name="compare" onclick="$.fn.checkMainCompare()">
+                    <label class="setMainCompare">设置对比主体</label>
+                </div>
             </div>
         </div>
         <div class="picture-content ui container">
@@ -27,17 +33,17 @@
                 <div class="ten wide column">
                     <div th:replace="site_selection/fragments/auto_navi_map :: map"></div>
                 </div>
-                <div class="six wide column">
+                <div  class="six wide column">
                     <div th:replace="site_selection/fragments/bar_chart :: bar"></div>
                 </div>
             </div>
         </div>
         <div class="table-content ui container">
             <div class="ui stackable equal width grid">
-                <div class="ten wide column">
+                <div id="detailTableSection" class="sixteen wide column">
                     <div id="tab_info" class="evaluation-content" th:include="site_selection/fragments/tab_info :: table"></div>
                 </div>
-                <div class="six wide column">
+                <div id="compareBarSection" class="six wide column">
                     <div id="compare_bar" th:include="site_selection/fragments/bar_chart :: compareBar"></div>
                 </div>
             </div>

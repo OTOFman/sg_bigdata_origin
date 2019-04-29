@@ -201,4 +201,14 @@ $.fn.createChartInstance = function (ctx) {
     });
 };
 
+$.fn.checkMainCompare = function () {
+    let checkbox = document.getElementsByName("compare")[0];
+    if (checkbox.checked) {
+        document.getElementById("compareBarSection").setAttribute("style", "display: inline-block");
+        document.getElementById("detailTableSection").setAttribute("class", "ten wide column");
+    }else {
+        document.getElementById("compareBarSection").setAttribute("style", "display: none");
+        document.getElementById("detailTableSection").setAttribute("class", "sixteen wide column");
+    }
+};
 
