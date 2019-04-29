@@ -8,8 +8,6 @@ $(document).ready(function () {
 });
 
 $.fn.searchPoiByName = function() {
-    var windowsArr = [];
-    var marker = [];
 
     AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
         var autoOptions = {
