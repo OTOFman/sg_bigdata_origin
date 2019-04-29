@@ -68,10 +68,13 @@ $(document).ready(function(){
     //compareSite();
 });
 
-
+var evaluationBarChart;
 $.fn.drawBar = function (bar_result) {
     var ctx = document.getElementById('siteSelectionResult');
-    var myChart = new Chart(ctx, {
+    if (typeof evaluationBarChart !== "undefined") {
+        evaluationBarChart.destroy();
+    }
+    evaluationBarChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['交通', '异业', '竞业', '社区'],
@@ -156,17 +159,17 @@ $.fn.getCompareBarShowData = function (mainDataArray, secondaryDataArray) {
     return showData;
 };
 
-var myChart;
+var compareBarChart;
 $.fn.compareSite = function (reponseFromServer) {
     var ctx = document.getElementById('siteCompare');
     ctx.height = (window.innerHeight*0.4);
-    if (typeof myChart !== "undefined") {
-        myChart.destroy();
+    if (typeof compareBarChart !== "undefined") {
+        compareBarChart.destroy();
     }
-    myChart = $.fn.createChartInstance(ctx);
+    compareBarChart = $.fn.createChartInstance(ctx);
     var dataForChart = $.fn.createCompareSite(document.getElementById('tipinput').value, reponseFromServer)
-    myChart.data.datasets = dataForChart;
-    myChart.update();
+    compareBarChart.data.datasets = dataForChart;
+    compareBarChart.update();
 };
 
 $.fn.createChartInstance = function (ctx) {
