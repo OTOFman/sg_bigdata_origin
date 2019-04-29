@@ -111,15 +111,13 @@ $.fn.createCompareSite = function (address, responseFromServer) {
     let percentSecondaryData = new Array();
     let compareDataSets = [];
     if (mainData.length === 0) {
-        let flag = 1;
-        mainData = $.fn.getDataFromResponse(responseFromServer, flag);
+        mainData = $.fn.getDataFromResponse(responseFromServer);
         mainDataset.label = address;
         mainDataset.data = [1, 1, 1, 1, 1, 1, 1, 1, 1];
         compareDataSets.push(mainDataset);
     } else {
         secondaryDataset.label = address;
-        let flag = -1;
-        secondaryData = $.fn.getDataFromResponse(responseFromServer, flag);
+        secondaryData = $.fn.getDataFromResponse(responseFromServer);
         let showData = $.fn.getCompareBarShowData(mainData, secondaryData);
         percentSecondaryData = showData.secondaryDataArray;
         percentMainData = showData.mainDataArray;
@@ -131,17 +129,17 @@ $.fn.createCompareSite = function (address, responseFromServer) {
     return compareDataSets;
 };
 
-$.fn.getDataFromResponse = function(responseFromServer, flag) {
+$.fn.getDataFromResponse = function(responseFromServer) {
     let data = new Array();
-    data.push(flag * responseFromServer.trafficEvaluation.metroAmount);
-    data.push(flag * responseFromServer.trafficEvaluation.busStationAmount);
-    data.push(flag * responseFromServer.trafficEvaluation.parkingAmount);
-    data.push(flag * responseFromServer.competitorEvaluation.competitorAmount);
-    data.push(flag * responseFromServer.competitorEvaluation.starCompetitorAmount);
-    data.push(flag * responseFromServer.cooperatorEvaluation.cooperatorAmount);
-    data.push(flag * responseFromServer.communityEvaluation.apartmentAmount);
-    data.push(flag * responseFromServer.communityEvaluation.avgPrice);
-    data.push(flag * responseFromServer.communityEvaluation.avgBuildYear);
+    data.push(responseFromServer.trafficEvaluation.metroAmount);
+    data.push(responseFromServer.trafficEvaluation.busStationAmount);
+    data.push(responseFromServer.trafficEvaluation.parkingAmount);
+    data.push(responseFromServer.competitorEvaluation.competitorAmount);
+    data.push(responseFromServer.competitorEvaluation.starCompetitorAmount);
+    data.push(responseFromServer.cooperatorEvaluation.cooperatorAmount);
+    data.push(responseFromServer.communityEvaluation.apartmentAmount);
+    data.push(responseFromServer.communityEvaluation.avgPrice);
+    data.push(responseFromServer.communityEvaluation.avgBuildYear);
     return data;
 };
 
@@ -153,7 +151,7 @@ $.fn.getCompareBarShowData = function (mainDataArray, secondaryDataArray) {
     for (let i=0; i<mainDataArray.length; i++) {
         let sumOfItems = mainDataArray[i]+secondaryDataArray[i];
         showData.mainDataArray[i] = sumOfItems === 0 ? 0 : mainDataArray[i]/sumOfItems;
-        showData.secondaryDataArray[i] = sumOfItems === 0 ? 0 : secondaryDataArray[i]/sumOfItems;
+        showData.secondaryDataArray[i] = sumOfItems === 0 ? 0 : (-1)*secondaryDataArray[i]/sumOfItems;
     }
     return showData;
 };
