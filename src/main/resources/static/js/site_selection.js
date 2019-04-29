@@ -204,11 +204,13 @@ $.fn.createChartInstance = function (ctx) {
 $.fn.checkMainCompare = function () {
     let checkbox = document.getElementsByName("compare")[0];
     if (checkbox.checked) {
-        document.getElementById("compareBarSection").setAttribute("style", "display: inline-block");
-        document.getElementById("detailTableSection").setAttribute("class", "ten wide column");
+        $("#compareBarSection").css("display", "inline-block");
+        $("#detailTableSection").removeClass("sixteen wide column").addClass("ten wide column");
+        $("#compareMainName").html(document.getElementById('tipinput').value);
     }else {
-        document.getElementById("compareBarSection").setAttribute("style", "display: none");
-        document.getElementById("detailTableSection").setAttribute("class", "sixteen wide column");
+        $("#compareBarSection").css("display", "none");
+        $("#detailTableSection").removeClass("ten wide column").addClass("sixteen wide column");
+        $("#compareMainName").html("");
     }
 };
 

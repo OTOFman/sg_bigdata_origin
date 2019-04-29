@@ -38,6 +38,12 @@
     display: none;
 }
 
+#compareMainName {
+    font-size: smaller;
+    margin-left: 1rem;
+    opacity: 0.7;
+}
+
 body {
     background-color: #E4EEF4 !important;
 }
@@ -105,4 +111,8 @@ canvas {
 .ui.checkbox.compare-check {
     display: block;
     margin: 0 1rem;
+}
+
+.ui.checkbox.compare-check .set-main-compare {
+    display: inline-block;
 }
