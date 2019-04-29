@@ -59,46 +59,13 @@
                     console.log([reponseFromServer.barData]);
                     bar_result = [reponseFromServer.barData];
                     $.fn.drawBar(bar_result);
-                    reponseFromServer1 = {};
-                    reponseFromServer1 = reponseFromServer;
-                    compareSite(reponseFromServer1);
+                    $.fn.compareSite(reponseFromServer);
                 },
                 error: function (data) {
                     console.log('error: ' + data);
                 }
             });
         };
-
-        compareSite = function (reponseFromServer) {
-            var ctx = document.getElementById('siteCompare');
-            ctx.height = (window.innerHeight*0.4);
-            var myChart = new Chart(ctx, {
-                type: 'horizontalBar',
-                data: {
-                    labels: ['地铁轻轨', '公交车站', '停车场', '一线早教', '普通早教', '异业机构', '居民户数', '平均房价', '平均修建年份'],
-                    datasets: $.fn.createCompareSite(document.getElementById('tipinput').value, reponseFromServer)
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            },
-                            barPercentage: 0.5,
-                            barThickness: 12,
-                            minBarLength: 20
-                        }],
-                        xAxes: [{
-                            ticks: {
-                                display: false
-                            }
-                        }]
-                    }
-                }
-            });
-        }
     </script>
     <script rel="script" th:src="@{/js/site_selection.js}"></script>
 </html>

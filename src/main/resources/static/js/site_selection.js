@@ -156,4 +156,46 @@ $.fn.getCompareBarShowData = function (mainDataArray, secondaryDataArray) {
     return showData;
 };
 
+var myChart;
+$.fn.compareSite = function (reponseFromServer) {
+    var ctx = document.getElementById('siteCompare');
+    ctx.height = (window.innerHeight*0.4);
+    if (typeof myChart !== "undefined") {
+        myChart.destroy();
+    }
+    myChart = $.fn.createChartInstance(ctx);
+    var dataForChart = $.fn.createCompareSite(document.getElementById('tipinput').value, reponseFromServer)
+    myChart.data.datasets = dataForChart;
+    myChart.update();
+};
+
+$.fn.createChartInstance = function (ctx) {
+    return new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: ['地铁轻轨', '公交车站', '停车场', '一线早教', '普通早教', '异业机构', '居民户数', '平均房价', '平均修建年份'],
+            datasets: []
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    barPercentage: 0.5,
+                    barThickness: 12,
+                    minBarLength: 20
+                }],
+                xAxes: [{
+                    ticks: {
+                        display: false
+                    }
+                }]
+            }
+        }
+    });
+};
+
 
