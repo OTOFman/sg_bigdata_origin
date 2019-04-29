@@ -28,6 +28,12 @@
     width: 24rem;
 }
 
+#compare_bar {
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 5px;
+    border-radius: 4px;
+}
+
 body {
     background-color: #E4EEF4 !important;
 }
@@ -86,4 +92,8 @@ canvas {
 .ui.bottom.attached.tab.segment.active {
     box-shadow: rgba(0, 0, 0, 0.1) 0 0 5px;
     border-radius: 4px;
+}
+
+.table-content.ui.container {
+    padding: 0 1rem;
 }
