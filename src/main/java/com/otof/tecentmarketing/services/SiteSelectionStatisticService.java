@@ -48,10 +48,9 @@ public class SiteSelectionStatisticService {
         TrafficEvaluation trafficEvaluation = trafficStatisticService.getTrafficEvaluation(location);
         CommunityEvaluation communityEvaluation = communityStatisticService.getCommunityInfos(location, "3000", "120000");
 
-
+        dataList.add(trafficEvaluation.getEvaluation());
         dataList.add(competitorEvaluation.getEvaluation());
         dataList.add(cooperatorEvaluation.getEvaluation());
-        dataList.add(trafficEvaluation.getEvaluation());
         dataList.add(communityEvaluation.getEvaluation());
 
         threeDimensionBar.getBarData().setData(dataList);

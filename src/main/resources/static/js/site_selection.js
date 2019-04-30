@@ -40,7 +40,7 @@ $.fn.drawBar = function (bar_result) {
     evaluationBarChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['交通', '异业', '竞业', '社区'],
+            labels: ['交通', '竞业', '异业', '社区'],
             datasets: bar_result
         },
         options: {
