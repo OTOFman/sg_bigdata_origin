@@ -5,51 +5,15 @@ let secondaryData = new Array();
 var mainDataset = {
     label: '',
     data: [],
-    backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(198, 78, 64, 0.2)',
-        'rgba(200, 200, 200, 0.2)',
-        'rgba(211, 78, 8, 0.2)'
-    ],
-    borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(198, 78, 64, 0.2)',
-        'rgba(200, 200, 200, 0.2)',
-        'rgba(211, 78, 8, 0.2)'
-    ],
+    backgroundColor: "rgba(255, 99, 132, 0.2)",
+    borderColor: "rgba(255, 99, 132, 1)",
     borderWidth: 1
 };
 var secondaryDataset = {
     label: '',
     data: [],
-    backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(198, 78, 64, 0.2)',
-        'rgba(200, 200, 200, 0.2)',
-        'rgba(211, 78, 8, 0.2)'
-    ],
-    borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(198, 78, 64, 0.2)',
-        'rgba(200, 200, 200, 0.2)',
-        'rgba(211, 78, 8, 0.2)'
-    ],
+    backgroundColor: "rgba(54, 162, 235, 0.2)",
+    borderColor: "rgba(54, 162, 235, 1)",
     borderWidth: 1
 };
 
@@ -65,7 +29,6 @@ $.fn.loadMap = function () {
 $(document).ready(function(){
     $('.menu .item').tab();
     $.fn.searchPoiByName();
-    //compareSite();
 });
 
 var evaluationBarChart;
@@ -153,8 +116,8 @@ $.fn.getCompareBarShowData = function (mainDataArray, secondaryDataArray) {
     };
     for (let i=0; i<mainDataArray.length; i++) {
         let sumOfItems = mainDataArray[i]+secondaryDataArray[i];
-        showData.mainDataArray[i] = sumOfItems === 0 ? 0 : mainDataArray[i]/sumOfItems;
-        showData.secondaryDataArray[i] = sumOfItems === 0 ? 0 : (-1)*secondaryDataArray[i]/sumOfItems;
+        showData.mainDataArray[i] = sumOfItems === 0 ? 0 : (-1)*mainDataArray[i]/sumOfItems;
+        showData.secondaryDataArray[i] = sumOfItems === 0 ? 0 : secondaryDataArray[i]/sumOfItems;
     }
     return showData;
 };
@@ -169,6 +132,9 @@ $.fn.compareSite = function (reponseFromServer) {
     compareBarChart = $.fn.createChartInstance(ctx);
     var dataForChart = $.fn.createCompareSite(document.getElementById('tipinput').value, reponseFromServer)
     compareBarChart.data.datasets = dataForChart;
+    // compareBarChart.options.tooltips.callbacks.afterLabel = function() {
+    //     return "aaa"
+    // };
     compareBarChart.update();
 };
 
