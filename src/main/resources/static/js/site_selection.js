@@ -81,6 +81,11 @@ $.fn.createCompareSite = function (address, responseFromServer) {
         mainDataset.label = address;
         mainDataset.data = [1, 1, 1, 1, 1, 1, 1, 1, 1];
         compareDataSets.push(mainDataset);
+        compareBarChart.options.tooltips.callbacks.label = function(tooltipItem) {
+            let index = tooltipItem.index;
+            return mainDataset.label + ": " + mainData[index];
+        }
+
     } else {
         secondaryDataset.label = address;
         secondaryData = $.fn.getDataFromResponse(responseFromServer);
@@ -91,6 +96,11 @@ $.fn.createCompareSite = function (address, responseFromServer) {
         secondaryDataset.data = percentSecondaryData;
         compareDataSets.push(mainDataset);
         compareDataSets.push(secondaryDataset);
+        compareBarChart.options.tooltips.callbacks.label = function(tooltipItem, data) {
+            let index = tooltipItem.index;
+            return mainDataset.label + ": " + mainData[index]
+                + " " + secondaryDataset.label + ": " + secondaryData[index];
+        }
     }
     return compareDataSets;
 };
@@ -132,9 +142,6 @@ $.fn.compareSite = function (reponseFromServer) {
     compareBarChart = $.fn.createChartInstance(ctx);
     var dataForChart = $.fn.createCompareSite(document.getElementById('tipinput').value, reponseFromServer)
     compareBarChart.data.datasets = dataForChart;
-    // compareBarChart.options.tooltips.callbacks.afterLabel = function() {
-    //     return "aaa"
-    // };
     compareBarChart.update();
 };
 
