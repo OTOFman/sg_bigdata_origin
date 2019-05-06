@@ -3,7 +3,7 @@ package com.otof.tecentmarketing.enums;
 public enum KiloEnum {
     ONEKILOMETER(1, "1000", 0.5),
     TWOKILOMETER(2, "2000", 0.3),
-    THREEKILOMETER(3, "3000", 0.2);
+    THREEKILOMETER(3, "1250", 0.2);
 
     public int index;
     public String radius;

@@ -7,13 +7,13 @@ $(document).ready(function () {
             });
             $(item).addClass("active");
             if ("first" === item.dataset.tab) {
-               $.fn.renderPoiByType("公交站|地铁站|停车场", "武汉", 1000);
+               $.fn.renderPoiByType("公交站|地铁站|停车场", "武汉", 500);
             } else if ("second" === item.dataset.tab) {
-               $.fn.renderPoiByType("早教", "武汉", 3000);
+               $.fn.renderPoiByType("早教", "武汉", 1250);
             } else if ("third" === item.dataset.tab) {
-               $.fn.renderPoiByType("儿童|幼儿", "武汉", 3000);
+               $.fn.renderPoiByType("儿童", "武汉", 1250);
             } else {
-               $.fn.renderPoiByType("住宅小区|别墅", "武汉", 3000);
+               $.fn.renderPoiByType("住宅小区|别墅", "武汉", 1250);
             }
             let tabs = Array.prototype.slice.call(document.getElementsByClassName("tab"));
             tabs.forEach(function (value) {

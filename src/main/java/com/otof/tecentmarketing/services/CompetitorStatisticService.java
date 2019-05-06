@@ -44,7 +44,7 @@ public class CompetitorStatisticService implements StatisticService {
 
 
     public CompetitorEvaluation getCompetitorEvaluation(String location) throws URISyntaxException, InterruptedException {
-        List<PoisEntity> poisEntityList = getSurroundPois(location, KiloEnum.THREEKILOMETER.radius);
+        List<PoisEntity> poisEntityList = getSurroundPois(location, "1250");
         return competitorStatisticRules.analysisCompetitors(poisEntityList);
     }
 

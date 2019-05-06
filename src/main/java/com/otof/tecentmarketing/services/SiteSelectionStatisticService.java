@@ -46,7 +46,7 @@ public class SiteSelectionStatisticService {
         CompetitorEvaluation competitorEvaluation = competitorStatisticService.getCompetitorEvaluation(location);
         CooperatorEvaluation cooperatorEvaluation = cooperatorStatisticService.getCooperatorEvaluation(location);
         TrafficEvaluation trafficEvaluation = trafficStatisticService.getTrafficEvaluation(location);
-        CommunityEvaluation communityEvaluation = communityStatisticService.getCommunityInfos(location, "3000", "120000");
+        CommunityEvaluation communityEvaluation = communityStatisticService.getCommunityInfos(location, "1250", "120000");
 
         dataList.add(trafficEvaluation.getEvaluation());
         dataList.add(competitorEvaluation.getEvaluation());

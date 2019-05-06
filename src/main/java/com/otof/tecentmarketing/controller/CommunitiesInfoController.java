@@ -21,7 +21,7 @@ import java.util.Set;
 @RequestMapping("communitiesInfo")
 public class CommunitiesInfoController {
 
-    private final String RADIUS = "3000";
+    private final String RADIUS = "1250";
     private final String APARTMENTTYPE = "120000";
 
     @Autowired
