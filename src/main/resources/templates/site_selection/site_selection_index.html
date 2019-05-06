@@ -56,6 +56,7 @@
 
     <script th:inline="javascript">
         getEvaluationBarResult = function(searchAddress) {
+            $(".six.wide.column .loader-section").show();
             $.ajax({
                 url: "/site_selection_bar",
                 type: 'get',
@@ -63,6 +64,7 @@
                 data: {instituteName : searchAddress},
                 async: true,
                 success: function(data){
+                    $(".six.wide.column .loader-section").hide();
                     $("#tab_info").html(data);
                     console.log([reponseFromServer.barData]);
                     bar_result = [reponseFromServer.barData];

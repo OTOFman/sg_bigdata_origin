@@ -117,14 +117,15 @@ canvas {
     display: inline-block;
 }
 
-.loader-section {
+.six.wide.column .loader-section {
     position: absolute;
     right: 1rem;
     left: 1rem;
     top: 1rem;
     bottom: 1rem;
+    display: none;
 }
 
-.loader-section .ui.segment {
+.six.wide.column .loader-section .ui.segment {
     height: 100%;
 }
