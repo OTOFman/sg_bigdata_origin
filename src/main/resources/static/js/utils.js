@@ -16,9 +16,13 @@ $.fn.searchPoiByName = function() {
         };
         autocomplete= new AMap.Autocomplete(autoOptions);
         var placeSearch = new AMap.PlaceSearch({
+            pageSize: 5,
+            pageIndex: 1,
             city:'武汉',
-            map:map
-        })
+            citylimit: true,
+            map:map,
+            panel: "panel"
+        });
         AMap.event.addListener(autocomplete, "select", function(e){
             placeSearch.setCity(e.poi.adcode);
             placeSearch.search(e.poi.name);
@@ -30,8 +34,12 @@ $.fn.searchPoiByName = function() {
 $.fn.searchPoiByType = function(type, city, radius, location) {
     AMap.plugin(['AMap.PlaceSearch'],function(){
         var placeSearch = new AMap.PlaceSearch({
+            pageSize: 5,
+            pageIndex: 1,
             city:city,
+            citylimit: true,
             map:map,
+            panel: "panel"
         });
         placeSearch.setPageSize(50);
         placeSearch.searchNearBy(type, location, radius);
