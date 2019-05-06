@@ -116,3 +116,15 @@ canvas {
 .ui.checkbox.compare-check .set-main-compare {
     display: inline-block;
 }
+
+.loader-section {
+    position: absolute;
+    right: 1rem;
+    left: 1rem;
+    top: 1rem;
+    bottom: 1rem;
+}
+
+.loader-section .ui.segment {
+    height: 100%;
+}
