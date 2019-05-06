@@ -43,6 +43,7 @@
         <div class="table-content ui container">
             <div class="ui stackable equal width grid">
                 <div id="detailTableSection" class="sixteen wide column">
+                    <div th:replace="site_selection/fragments/utils :: loader"></div>
                     <div id="tab_info" class="evaluation-content" th:include="site_selection/fragments/tab_info :: table"></div>
                 </div>
                 <div id="compareBarSection" class="six wide column">
@@ -56,7 +57,7 @@
 
     <script th:inline="javascript">
         getEvaluationBarResult = function(searchAddress) {
-            $(".six.wide.column .loader-section").show();
+            $(".loader-section").show();
             $.ajax({
                 url: "/site_selection_bar",
                 type: 'get',
@@ -64,7 +65,7 @@
                 data: {instituteName : searchAddress},
                 async: true,
                 success: function(data){
-                    $(".six.wide.column .loader-section").hide();
+                    $(".loader-section").hide();
                     $("#tab_info").html(data);
                     console.log([reponseFromServer.barData]);
                     bar_result = [reponseFromServer.barData];

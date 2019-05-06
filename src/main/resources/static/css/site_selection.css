@@ -117,7 +117,7 @@ canvas {
     display: inline-block;
 }
 
-.six.wide.column .loader-section {
+.loader-section {
     position: absolute;
     right: 1rem;
     left: 1rem;
@@ -126,6 +126,6 @@ canvas {
     display: none;
 }
 
-.six.wide.column .loader-section .ui.segment {
+.loader-section .ui.segment {
     height: 100%;
 }
