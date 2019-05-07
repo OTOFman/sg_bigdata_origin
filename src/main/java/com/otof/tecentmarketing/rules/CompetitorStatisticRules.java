@@ -31,8 +31,8 @@ public class CompetitorStatisticRules {
     }
 
     private void initBasicData(List<PoisEntity> poisEntityList) {
-        competitorAmount = poisEntityList.size();
         starCompetitorAmount = getStarInstituteAmount(poisEntityList);
+        competitorAmount = poisEntityList.size() - starCompetitorAmount;
     }
 
     private int evaluateCompetitor(List<PoisEntity> poisEntityList) {
