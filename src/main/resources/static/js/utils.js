@@ -26,7 +26,11 @@ $.fn.searchPoiByName = function() {
         AMap.event.addListener(autocomplete, "select", function(e){
             placeSearch.setCity(e.poi.adcode);
             placeSearch.search(e.poi.name);
-            getEvaluationBarResult(e.poi.name);
+        });
+        AMap.event.addListener(placeSearch, "complete", function (e) {
+            console.log("****" + e.poiList.pois[0].location);
+            getEvaluationBarResult(e.poiList.pois[0].location);
+
         });
     });
 };

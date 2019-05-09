@@ -32,12 +32,12 @@ public class SiteSelectionController {
     }
 
     @GetMapping(path = "/site_selection_bar")
-    public String getSiteSelectionBar(@RequestParam String instituteName, Model model) throws URISyntaxException, InterruptedException {
-        List<GeoCodeResponseEntity.GeocodesEntity> geocodesEntityList = handleMapService.getGeoCodeByName(instituteName, "武汉").getBody().getGeocodes();
-        if (geocodesEntityList.isEmpty()) {
-            return null;
-        }
-        model.addAttribute("bar_result", siteSelectionStatisticService.getThreeDimensionResult(geocodesEntityList.get(0).getLocation()));
+    public String getSiteSelectionBar(@RequestParam String location, Model model) throws URISyntaxException, InterruptedException {
+//        List<GeoCodeResponseEntity.GeocodesEntity> geocodesEntityList = handleMapService.getGeoCodeByName(instituteName, "武汉").getBody().getGeocodes();
+//        if (geocodesEntityList.isEmpty()) {
+//            return null;
+//        }
+        model.addAttribute("bar_result", siteSelectionStatisticService.getThreeDimensionResult(location));
         return "site_selection/fragments/tab_info :: table";
     }
 }

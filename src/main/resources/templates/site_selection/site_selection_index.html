@@ -56,18 +56,17 @@
 
 
     <script th:inline="javascript">
-        getEvaluationBarResult = function(searchAddress) {
+        getEvaluationBarResult = function(location) {
             $(".loader-section").show();
             $.ajax({
                 url: "/site_selection_bar",
                 type: 'get',
                 contentType: 'application/json',
-                data: {instituteName : searchAddress},
+                data: {location : location.lng + ',' + location.lat},
                 async: true,
                 success: function(data){
                     $(".loader-section").hide();
                     $("#tab_info").html(data);
-                    console.log([reponseFromServer.barData]);
                     bar_result = [reponseFromServer.barData];
                     $.fn.drawBar(bar_result);
                     $.fn.compareSite(reponseFromServer);
