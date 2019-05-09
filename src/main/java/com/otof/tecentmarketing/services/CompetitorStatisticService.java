@@ -54,8 +54,7 @@ public class CompetitorStatisticService implements StatisticService {
         URI uri = new URIBuilder(mapConfiguration.getPoiUrl())
                 .addParameter("location", location)
                 .addParameter("radius", radius)
-                .addParameter("types", mapConfiguration.getCompetitorTypes())
-                .addParameter("keywords", "早教")
+                .addParameter("keywords", mapConfiguration.getCompetitorKeywords())
                 .addParameter("key", mapConfiguration.getKey())
                 .build();
 

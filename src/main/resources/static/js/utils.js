@@ -28,7 +28,7 @@ $.fn.searchPoiByName = function() {
             placeSearch.search(e.poi.name);
         });
         AMap.event.addListener(placeSearch, "complete", function (e) {
-            console.log("****" + e.poiList.pois[0].location);
+            current_location = e.poiList.pois[0].location;
             getEvaluationBarResult(e.poiList.pois[0].location);
 
         });
@@ -72,16 +72,9 @@ $.fn.renderPoiByType = function (type, city, radius) {
         city: "全国"
     });
     map.clearMap();
-    var geocode = "";
-    var address  = document.getElementById('tipinput').value;
-    geocoder.setCity("全国");
-    geocoder.getLocation(address, function(status, result) {
-        if (status === 'complete'&&result.geocodes.length) {
-            geocode = result.geocodes[0].location;
-            $.fn.searchPoiByType(type, city, radius, geocode);
-        }else {
-            alert("无法加载兴趣点");
-        }
-    });
+    if (current_location != "") {
+        $.fn.searchPoiByType(type, city, radius, current_location);
+    }
+    return;
 };
 

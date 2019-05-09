@@ -51,7 +51,7 @@ public class TrafficStatisticService implements StatisticService {
         URI uri = new URIBuilder(mapConfiguration.getPoiUrl())
                 .addParameter("location", location)
                 .addParameter("radius", radius)
-                .addParameter("types", mapConfiguration.getTrafficTypes())
+                .addParameter("keywords", mapConfiguration.getTrafficKeywords())
                 .addParameter("key", mapConfiguration.getKey())
                 .build();
 

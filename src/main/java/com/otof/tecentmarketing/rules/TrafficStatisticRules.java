@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 @Component
 public class TrafficStatisticRules {
 
-    private final List<String> metroTypeCodes = Stream.of("150501","150600").collect(Collectors.toList());
+    private final List<String> metroTypeCodes = Stream.of("150500").collect(Collectors.toList());
     private final List<String> busStationTypeCodes = Stream.of("150700", "150701","150702", "150703").collect(Collectors.toList());
     private final List<String> parkingTypeCodes = Stream.of("150904", "150906").collect(Collectors.toList());
     private Map<String, List<PoisEntity>> trafficPoisMap;

@@ -16,8 +16,7 @@ public class MapConfiguration {
     private String key;
     private String geoCodeUrl;
     private String poiUrl;
-    private String babyTypes;
-    private String competitorTypes;
+    private String coorperatorKeywords;
     private String competitorKeywords;
-    private String trafficTypes;
+    private String trafficKeywords;
 }

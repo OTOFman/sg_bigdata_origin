@@ -1,5 +1,5 @@
 let bar_result = {};
-
+let current_location = '';
 let mainData = new Array();
 let secondaryData = new Array();
 var mainDataset = {
@@ -29,6 +29,7 @@ $.fn.loadMap = function () {
 $(document).ready(function(){
     $('.menu .item').tab();
     $.fn.searchPoiByName();
+    current_location = '';
 });
 
 var evaluationBarChart;
