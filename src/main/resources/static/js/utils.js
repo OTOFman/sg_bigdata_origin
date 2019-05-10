@@ -3,6 +3,7 @@ $(document).ready(function () {
     map = new AMap.Map("auto_navi_map", {
         resizeEnable: true,
         center: [116.397428, 39.90923],//地图中心点
+        zoom:11,
         keyboardEnable: false
     });
 });
@@ -29,8 +30,9 @@ $.fn.searchPoiByName = function() {
         });
         AMap.event.addListener(placeSearch, "complete", function (e) {
             current_location = e.poiList.pois[0].location;
-            getEvaluationBarResult(e.poiList.pois[0].location);
-
+            if (e.poiList.pageIndex === 1) {
+                getEvaluationBarResult(e.poiList.pois[0].location);
+            }
         });
     });
 };
@@ -38,15 +40,16 @@ $.fn.searchPoiByName = function() {
 $.fn.searchPoiByType = function(type, city, radius, location) {
     AMap.plugin(['AMap.PlaceSearch'],function(){
         var placeSearch = new AMap.PlaceSearch({
+            type: type,
             pageSize: 5,
             pageIndex: 1,
             city:city,
             citylimit: true,
             map:map,
-            panel: "panel"
+            panel: "panel",
+            autoFitView: true
         });
-        placeSearch.setPageSize(50);
-        placeSearch.searchNearBy(type, location, radius);
+        placeSearch.searchNearBy('', location, radius);
     });
 };
 
@@ -68,9 +71,6 @@ $.fn.getGeoCode = function () {
 };
 
 $.fn.renderPoiByType = function (type, city, radius) {
-    var geocoder = new AMap.Geocoder({
-        city: "全国"
-    });
     map.clearMap();
     if (current_location != "") {
         $.fn.searchPoiByType(type, city, radius, current_location);

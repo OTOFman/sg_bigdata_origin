@@ -56,7 +56,7 @@ public class CooperatorStatisticService implements StatisticService {
 
         URI uri = new URIBuilder(mapConfiguration.getPoiUrl())
                 .addParameter("location", location)
-                .addParameter("keywords", mapConfiguration.getCoorperatorKeywords())
+                .addParameter("types", mapConfiguration.getCoorperatorKeywords())
                 .addParameter("radius", radius)
                 .addParameter("key", mapConfiguration.getKey())
                 .build();
