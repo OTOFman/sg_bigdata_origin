@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -45,11 +47,15 @@ public class CommunityStatisticRules {
     }
 
     private double getAveragePrice() {
-        return totalOfPrice / communityEvaluation.getApartmentAmount();
+        double avgPrice = totalOfPrice / communityEvaluation.getApartmentAmount();
+        BigDecimal bd=new BigDecimal(avgPrice);
+
+        return bd.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
-    private double getAverageBuildYear() {
-        return totalOfYear / communityEvaluation.getApartmentAmount();
+    private String getAverageBuildYear() {
+        double avgYear = totalOfYear / communityEvaluation.getApartmentAmount();
+        return new DecimalFormat("#").format(avgYear);
     }
 
     private int evaluateCommunity() {
@@ -70,19 +76,19 @@ public class CommunityStatisticRules {
 
     private boolean isExcellent() {
         return NumberUtil.isBetween(getAveragePrice(), 20000, 1000000)
-                && NumberUtil.isBetween(getAverageBuildYear(), FIVEYEARAGO, THISYEAR)
+                && NumberUtil.isBetween(Double.parseDouble(getAverageBuildYear()), FIVEYEARAGO, THISYEAR)
                 && communityEvaluation.getChildrenAmount() >= 40000;
     }
 
     private boolean isGood() {
         return NumberUtil.isBetween(getAveragePrice(), 20000, 1000000)
-                || NumberUtil.isBetween(getAverageBuildYear(), FIVEYEARAGO, THISYEAR)
+                || NumberUtil.isBetween(Double.parseDouble(getAverageBuildYear()), FIVEYEARAGO, THISYEAR)
                 || communityEvaluation.getChildrenAmount() >= 30000;
     }
 
     private boolean isNotBad() {
         int tenYearAgo = THISYEAR - 10;
-        return NumberUtil.isBetweenMaxExclude(getAverageBuildYear(), tenYearAgo, FIVEYEARAGO)
+        return NumberUtil.isBetweenMaxExclude(Double.parseDouble(getAverageBuildYear()), tenYearAgo, FIVEYEARAGO)
                 && NumberUtil.isBetweenMaxExclude(getAveragePrice(), 10000, 20000)
                 && NumberUtil.isBetweenMaxExclude(communityEvaluation.getChildrenAmount(), 0, 20000);
     }

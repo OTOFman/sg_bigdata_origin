@@ -16,7 +16,7 @@ public class CommunityEvaluation {
 
     private int apartmentAmount;
     private int buildingAmount;
-    private double avgBuildYear;
+    private String avgBuildYear;
     private double childrenAmount;
     private int potentialUserAmount;
     private double radius;
